@@ -16,7 +16,7 @@ const Footer = () => {
               <div className="h-8 w-8 rounded-md bg-primary flex items-center justify-center mr-2">
                 <span className="text-primary-foreground font-bold text-lg">P</span>
               </div>
-              <span className="text-foreground font-bold text-xl">POSPro</span>
+              <span className="text-foreground font-bold text-xl">Brythiq POS</span>
             </div>
             <p className="mb-4 text-muted-foreground max-w-md">
               Empowering retailers with smart point-of-sale solutions that streamline operations, 
@@ -88,14 +88,14 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start">
                 <Mail className="h-5 w-5 mr-2 mt-0.5 text-muted-foreground" />
-                <span className="text-muted-foreground">support@pospro.com</span>
+                <span className="text-muted-foreground">support@Brythiq POS.com</span>
               </li>
               <li className="text-muted-foreground">
-                <p>123 Tech Park, Whitefield</p>
-                <p>Bangalore, Karnataka 560066</p>
+                <p>Bareilly</p>
+                <p>243001</p>
               </li>
               <li className="text-muted-foreground">
-                <p>+91 98765 43210</p>
+                <p>+91 7830402482</p>
               </li>
             </ul>
           </div>
@@ -107,7 +107,7 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="md:flex md:items-center md:justify-between">
             <div className="text-sm text-muted-foreground">
-              <p>&copy; {currentYear} POSPro. All rights reserved.</p>
+              <p>&copy; {currentYear} Brythiq POS. All rights reserved.</p>
             </div>
             <div className="flex space-x-6 mt-4 md:mt-0 text-sm">
               <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Terms of Service</a>

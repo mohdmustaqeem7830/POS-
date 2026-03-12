@@ -57,7 +57,7 @@ const ContactSection = () => {
                       type="tel" 
                       id="phone" 
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-gray-900" 
-                      placeholder="+91 98765 43210"
+                      placeholder="+91 7830402482"
                     />
                   </div>
                   <div>
@@ -115,8 +115,8 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <p className="font-medium mb-1">Phone</p>
-                    <p className="opacity-90">+91 98765 43210</p>
-                    <p className="opacity-90">+91 98765 43211</p>
+                    <p className="opacity-90">+91 7830402482</p>
+                    <p className="opacity-90">+91 7599982188</p>
                   </div>
                 </div>
                 
@@ -126,8 +126,8 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <p className="font-medium mb-1">Email</p>
-                    <p className="opacity-90">sales@pospro.com</p>
-                    <p className="opacity-90">support@pospro.com</p>
+                    <p className="opacity-90">sales@Brythiq POS.com</p>
+                    <p className="opacity-90">support@Brythiq POS.com</p>
                   </div>
                 </div>
                 
@@ -137,8 +137,8 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <p className="font-medium mb-1">Office Address</p>
-                    <p className="opacity-90">123 Tech Park, Whitefield</p>
-                    <p className="opacity-90">Bangalore, Karnataka 560066</p>
+                    <p className="opacity-90">Bareilly</p>
+                    <p className="opacity-90">243001</p>
                   </div>
                 </div>
                 

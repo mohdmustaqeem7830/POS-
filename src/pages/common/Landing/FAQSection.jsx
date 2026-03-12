@@ -49,14 +49,14 @@ const FAQSection = () => {
       icon: <Phone className="w-5 h-5" />,
       title: "Phone Support",
       description: "Talk to our experts",
-      action: "+91 98765 43210",
+      action: "+91 7830402482",
       buttonText: "Call Now"
     },
     {
       icon: <Mail className="w-5 h-5" />,
       title: "Email Support",
       description: "Get answers by email",
-      action: "support@pospro.com",
+      action: "support@Brythiq POS.com",
       buttonText: "Send Email"
     },
     {

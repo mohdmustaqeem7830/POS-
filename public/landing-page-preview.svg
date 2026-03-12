@@ -5,7 +5,7 @@
   <!-- Header Section (Simplified) -->
   <rect y="0" width="800" height="80" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" />
   <circle cx="50" cy="40" r="20" fill="#6366f1" />
-  <text x="80" y="45" font-family="Arial" font-size="18" font-weight="bold" fill="#1e293b">POSPro</text>
+  <text x="80" y="45" font-family="Arial" font-size="18" font-weight="bold" fill="#1e293b">Brythiq POS</text>
   <text x="500" y="45" font-family="Arial" font-size="14" fill="#64748b">Features</text>
   <text x="580" y="45" font-family="Arial" font-size="14" fill="#64748b">Pricing</text>
   <text x="650" y="45" font-family="Arial" font-size="14" fill="#64748b">Resources</text>
@@ -68,12 +68,12 @@
   <!-- Phone -->
   <circle cx="430" cy="660" r="10" fill="rgba(255,255,255,0.2)" />
   <text x="450" y="665" font-family="Arial" font-size="12" fill="white" font-weight="bold">Phone</text>
-  <text x="450" y="685" font-family="Arial" font-size="12" fill="rgba(255,255,255,0.8)">+91 98765 43210</text>
+  <text x="450" y="685" font-family="Arial" font-size="12" fill="rgba(255,255,255,0.8)">+91 7830402482</text>
   
   <!-- Email -->
   <circle cx="430" cy="710" r="10" fill="rgba(255,255,255,0.2)" />
   <text x="450" y="715" font-family="Arial" font-size="12" fill="white" font-weight="bold">Email</text>
-  <text x="450" y="735" font-family="Arial" font-size="12" fill="rgba(255,255,255,0.8)">sales@pospro.com</text>
+  <text x="450" y="735" font-family="Arial" font-size="12" fill="rgba(255,255,255,0.8)">sales@Brythiq POS.com</text>
   
   <!-- Benefits -->
   <circle cx="430" cy="770" r="8" fill="white" />
@@ -90,7 +90,7 @@
   
   <!-- Company Info -->
   <circle cx="70" cy="920" r="15" fill="#6366f1" />
-  <text x="95" y="925" font-family="Arial" font-size="16" font-weight="bold" fill="white">POSPro</text>
+  <text x="95" y="925" font-family="Arial" font-size="16" font-weight="bold" fill="white">Brythiq POS</text>
   <text x="70" y="950" font-family="Arial" font-size="12" fill="#94a3b8" width="250">Empowering retailers with smart point-of-sale solutions</text>
   
   <!-- Social Icons -->
@@ -120,13 +120,13 @@
   
   <!-- Contact -->
   <text x="600" y="920" font-family="Arial" font-size="14" font-weight="bold" fill="white">Contact</text>
-  <text x="600" y="950" font-family="Arial" font-size="12" fill="#94a3b8">support@pospro.com</text>
-  <text x="600" y="975" font-family="Arial" font-size="12" fill="#94a3b8">123 Tech Park, Whitefield</text>
-  <text x="600" y="1000" font-family="Arial" font-size="12" fill="#94a3b8">Bangalore, Karnataka 560066</text>
+  <text x="600" y="950" font-family="Arial" font-size="12" fill="#94a3b8">support@Brythiq POS.com</text>
+  <text x="600" y="975" font-family="Arial" font-size="12" fill="#94a3b8">Bareilly</text>
+  <text x="600" y="1000" font-family="Arial" font-size="12" fill="#94a3b8">243001</text>
   
   <!-- Bottom Footer -->
   <line x1="50" y1="1150" x2="750" y2="1150" stroke="#334155" stroke-width="1" />
-  <text x="70" y="1180" font-family="Arial" font-size="12" fill="#94a3b8">© 2024 POSPro. All rights reserved.</text>
+  <text x="70" y="1180" font-family="Arial" font-size="12" fill="#94a3b8">© 2024 Brythiq POS. All rights reserved.</text>
   <text x="500" y="1180" font-family="Arial" font-size="12" fill="#94a3b8">Terms</text>
   <text x="550" y="1180" font-family="Arial" font-size="12" fill="#94a3b8">Privacy</text>
   <text x="610" y="1180" font-family="Arial" font-size="12" fill="#94a3b8">Cookies</text>
