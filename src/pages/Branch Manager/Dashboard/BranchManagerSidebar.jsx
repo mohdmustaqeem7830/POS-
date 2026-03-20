@@ -64,7 +64,11 @@ const navLinks = [
   },
 ];
 
+<<<<<<< HEAD
 export default function BranchManagerSidebar({ onClose }) {
+=======
+export default function BranchManagerSidebar() {
+>>>>>>> c67068a59b5cf6e1f74d29eb8cc7ebe387ebcf5a
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -76,6 +80,7 @@ export default function BranchManagerSidebar({ onClose }) {
   };
 
   return (
+<<<<<<< HEAD
     <aside className="fixed top-0 left-0 h-screen w-64 bg-sidebar border-r border-sidebar-border flex flex-col py-6 px-4 shadow-lg z-50">
       
       {/* ✅ Close Button */}
@@ -86,10 +91,14 @@ export default function BranchManagerSidebar({ onClose }) {
         ✕
       </button>
 
+=======
+    <aside className="h-screen w-64 bg-sidebar border-r border-sidebar-border flex flex-col py-6 px-4 shadow-lg">
+>>>>>>> c67068a59b5cf6e1f74d29eb8cc7ebe387ebcf5a
       <div className="mb-8 text-2xl font-extrabold text-primary tracking-tight flex items-center gap-2">
         <Package className="w-7 h-7 text-primary" />
         Branch Manager
       </div>
+<<<<<<< HEAD
 
       {branch && (
         <div className="mb-6 px-4 py-3 bg-sidebar-accent rounded-lg">
@@ -102,13 +111,24 @@ export default function BranchManagerSidebar({ onClose }) {
         </div>
       )}
 
+=======
+      {branch && (
+        <div className="mb-6 px-4 py-3 bg-sidebar-accent rounded-lg">
+          <h3 className="font-medium text-sidebar-accent-foreground">{branch.name}</h3>
+          <p className="text-xs text-sidebar-accent-foreground/70 mt-1">{branch.address}</p>
+        </div>
+      )}
+>>>>>>> c67068a59b5cf6e1f74d29eb8cc7ebe387ebcf5a
       <nav className="flex-1 overflow-y-auto">
         <ul className="space-y-2">
           {navLinks.map((link) => (
             <li key={link.name}>
               <Link
                 to={link.path}
+<<<<<<< HEAD
                 onClick={onClose} // ✅ click pe close
+=======
+>>>>>>> c67068a59b5cf6e1f74d29eb8cc7ebe387ebcf5a
                 className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors text-base font-medium group ${
                   location.pathname.startsWith(link.path)
                     ? "bg-sidebar-accent text-sidebar-accent-foreground shadow"
@@ -130,11 +150,19 @@ export default function BranchManagerSidebar({ onClose }) {
           ))}
         </ul>
       </nav>
+<<<<<<< HEAD
 
       <div className="mt-auto">
         <Button
           onClick={handleLogout}
           className="flex items-center gap-3 rounded-lg text-base font-medium w-full text-left"
+=======
+      <div className="mt-auto">
+        <Button
+          onClick={handleLogout}
+          variant=""
+          className="flex items-center gap-3 rounded-lg transition-colors text-base font-medium w-full text-left "
+>>>>>>> c67068a59b5cf6e1f74d29eb8cc7ebe387ebcf5a
         >
           <LogOut className="w-5 h-5" />
           Logout

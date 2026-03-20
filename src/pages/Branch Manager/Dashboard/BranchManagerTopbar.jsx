@@ -1,16 +1,25 @@
 import React from "react";
 import { useSelector } from "react-redux";
+<<<<<<< HEAD
 import { Bell, User, Menu } from "lucide-react";
+=======
+import { Bell, User } from "lucide-react";
+>>>>>>> c67068a59b5cf6e1f74d29eb8cc7ebe387ebcf5a
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "@/components/theme-toggle";
 
+<<<<<<< HEAD
 export default function BranchManagerTopbar({ onMenuClick }) {
+=======
+export default function BranchManagerTopbar() {
+>>>>>>> c67068a59b5cf6e1f74d29eb8cc7ebe387ebcf5a
   const { userProfile } = useSelector((state) => state.user);
   const { branch } = useSelector((state) => state.branch);
 
   return (
     <header className="bg-background border-b px-6 py-4 flex items-center justify-between">
+<<<<<<< HEAD
       
       {/* ✅ LEFT SECTION */}
       <div className="flex items-center gap-4">
@@ -43,6 +52,23 @@ export default function BranchManagerTopbar({ onMenuClick }) {
       {/* ✅ RIGHT SECTION */}
       <div className="flex items-center gap-4">
         
+=======
+      <div>
+        <h1 className="text-xl font-semibold text-foreground">
+          {branch ? branch.name : "Branch Dashboard"}
+        </h1>
+        <p className="text-sm text-muted-foreground">
+          {new Date().toLocaleDateString("en-US", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </p>
+      </div>
+
+      <div className="flex items-center gap-4">
+>>>>>>> c67068a59b5cf6e1f74d29eb8cc7ebe387ebcf5a
         <ThemeToggle />
         
         <Button variant="ghost" size="icon" className="relative">
@@ -57,12 +83,17 @@ export default function BranchManagerTopbar({ onMenuClick }) {
             <User className="h-5 w-5 text-primary" />
           </div>
           <div className="hidden md:block">
+<<<<<<< HEAD
             <p className="text-sm font-medium text-foreground">
               {userProfile?.name || "Branch Manager"}
             </p>
             <p className="text-xs text-muted-foreground">
               {userProfile?.email || "manager@example.com"}
             </p>
+=======
+            <p className="text-sm font-medium text-foreground">{userProfile?.name || "Branch Manager"}</p>
+            <p className="text-xs text-muted-foreground">{userProfile?.email || "manager@example.com"}</p>
+>>>>>>> c67068a59b5cf6e1f74d29eb8cc7ebe387ebcf5a
           </div>
         </div>
       </div>

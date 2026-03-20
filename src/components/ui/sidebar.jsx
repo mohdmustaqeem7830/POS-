@@ -43,7 +43,11 @@ function useSidebar() {
 }
 
 function SidebarProvider({
+<<<<<<< HEAD
   defaultOpen = true,
+=======
+  defaultOpen = false,
+>>>>>>> c67068a59b5cf6e1f74d29eb8cc7ebe387ebcf5a
   open: openProp,
   onOpenChange: setOpenProp,
   className,

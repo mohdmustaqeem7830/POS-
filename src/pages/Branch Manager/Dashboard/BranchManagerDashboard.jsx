@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
+=======
+import React, { useEffect } from "react";
+>>>>>>> c67068a59b5cf6e1f74d29eb8cc7ebe387ebcf5a
 import { Outlet } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getBranchById } from "@/Redux Toolkit/features/branch/branchThunks";
@@ -8,6 +12,7 @@ import BranchManagerTopbar from "./BranchManagerTopbar";
 export default function BranchManagerDashboard({ children }) {
   const dispatch = useDispatch();
   const { userProfile } = useSelector((state) => state.user);
+<<<<<<< HEAD
 
   // ✅ Sidebar state
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -20,11 +25,19 @@ export default function BranchManagerDashboard({ children }) {
           jwt: localStorage.getItem("jwt"),
         })
       );
+=======
+  
+  useEffect(() => {
+    // Fetch branch data when component mounts
+    if (localStorage.getItem("jwt") && userProfile?.branchId) {
+      dispatch(getBranchById({ id: userProfile.branchId, jwt: localStorage.getItem("jwt") }));
+>>>>>>> c67068a59b5cf6e1f74d29eb8cc7ebe387ebcf5a
     }
   }, [dispatch, userProfile]);
 
   return (
     <div className="flex h-screen bg-gradient-to-br from-primary/5 via-background to-primary/10">
+<<<<<<< HEAD
       
       {/* ✅ Sidebar + Overlay */}
       {sidebarOpen && (
@@ -43,6 +56,11 @@ export default function BranchManagerDashboard({ children }) {
         {/* ✅ Topbar ko control diya */}
         <BranchManagerTopbar onMenuClick={() => setSidebarOpen(true)} />
 
+=======
+      <BranchManagerSidebar />
+      <div className="flex-1 flex flex-col">
+        <BranchManagerTopbar />
+>>>>>>> c67068a59b5cf6e1f74d29eb8cc7ebe387ebcf5a
         <main className="flex-1 overflow-y-auto p-8 md:p-10 lg:p-12 bg-background/80 rounded-tl-3xl shadow-xl m-4">
           {children || <Outlet />}
         </main>
