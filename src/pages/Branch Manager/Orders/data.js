@@ -4,6 +4,7 @@ export const paymentModeMap = {
   UPI: "UPI",
   Card: "CARD",
 };
+
 export const statusMap = {
   all: undefined,
   Completed: "COMPLETED",

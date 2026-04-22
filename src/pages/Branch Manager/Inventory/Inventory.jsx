@@ -30,7 +30,6 @@ const Inventory = () => {
     if (branch?.storeId) dispatch(getProductsByStore(branch?.storeId));
   }, [branch, dispatch]);
 
-  // Map inventory to table rows with product info
   const inventoryRows = inventories.map((inv) => {
     const product = products.find((p) => p?.id === inv.productId) || {};
     return {
@@ -43,51 +42,42 @@ const Inventory = () => {
     };
   });
 
-  // Filter inventory based on search and filters
   const filteredRows = inventoryRows.filter((row) => {
-    const matchesSearch =
-      // row?.sku?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      row?.name?.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      category === "all" || !category || row.category === category;
+    const matchesSearch = row?.name?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = category === "all" || !category || row.category === category;
     return matchesSearch && matchesCategory;
   });
 
-  // Add Inventory
   const handleAddInventory = async () => {
     if (!selectedProductId || !quantity || !branch?.id) return;
-    await dispatch(
-      createInventory({
-        branchId: branch?.id,
-        productId: selectedProductId,
-        quantity: Number(quantity),
-      })
-    );
+    await dispatch(createInventory({
+      branchId: branch?.id,
+      productId: selectedProductId,
+      quantity: Number(quantity),
+    }));
     setIsAddDialogOpen(false);
     setSelectedProductId("");
     setQuantity(1);
     dispatch(getInventoryByBranch(branch?.id));
   };
 
-  // Edit Inventory
   const handleOpenEditDialog = (row) => {
     setEditInventory(row);
     setEditQuantity(row.quantity);
     setEditProductId(row.productId);
     setIsEditDialogOpen(true);
   };
+
   const handleUpdateInventory = async () => {
     if (!editInventory?.id || !branch?.id) return;
-    await dispatch(
-      updateInventory({
-        id: editInventory.id,
-        dto: {
-          branchId: branch.id,
-          productId: editInventory.productId,
-          quantity: Number(editQuantity),
-        },
-      })
-    );
+    await dispatch(updateInventory({
+      id: editInventory.id,
+      dto: {
+        branchId: branch.id,
+        productId: editInventory.productId,
+        quantity: Number(editQuantity),
+      },
+    }));
     setIsEditDialogOpen(false);
     setEditInventory(null);
     setEditQuantity(1);
@@ -96,22 +86,22 @@ const Inventory = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold tracking-tight">Inventory Management</h1>
-        <div className="flex gap-2">
-          <Button className="gap-2" onClick={() => setIsAddDialogOpen(true)}>
+    <div className="space-y-4 md:space-y-6">
+      {/* Header */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
+        <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Inventory Management</h1>
+        <div className="flex gap-2 w-full sm:w-auto">
+          <Button className="gap-2 flex-1 sm:flex-none" onClick={() => setIsAddDialogOpen(true)}>
             <Plus className="h-4 w-4" />
             Add Inventory
           </Button>
-          <Button variant="outline" className="gap-2">
+          <Button variant="outline" className="gap-2 flex-1 sm:flex-none">
             <Upload className="h-4 w-4" />
             Import CSV
           </Button>
         </div>
       </div>
 
-      {/* Filters */}
       <InventoryFilters
         searchTerm={searchTerm}
         onSearch={(e) => setSearchTerm(e.target.value)}
@@ -121,15 +111,11 @@ const Inventory = () => {
         inventoryRows={inventoryRows}
       />
 
-
-      {/* Table */}
       <InventoryTable rows={filteredRows} onEdit={handleOpenEditDialog} />
 
-      {/* Add/Edit Dialog (reused) */}
       <InventoryFormDialog
         open={isAddDialogOpen}
         onOpenChange={setIsAddDialogOpen}
-       
         selectedProductId={selectedProductId}
         setSelectedProductId={setSelectedProductId}
         quantity={quantity}
@@ -140,7 +126,6 @@ const Inventory = () => {
       <InventoryFormDialog
         open={isEditDialogOpen}
         onOpenChange={setIsEditDialogOpen}
-       
         selectedProductId={editProductId}
         setSelectedProductId={setEditProductId}
         quantity={editQuantity}

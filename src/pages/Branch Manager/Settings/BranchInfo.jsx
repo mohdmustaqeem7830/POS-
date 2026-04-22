@@ -12,10 +12,7 @@ import { useSelector } from "react-redux";
 import { updateBranch } from "../../../Redux Toolkit/features/branch/branchThunks";
 import { useDispatch } from "react-redux";
 import { Input } from "@/components/ui/input";
-import { Phone } from "lucide-react";
-import { Mail } from "lucide-react";
-import { Clock } from "lucide-react";
-import { Save } from "lucide-react";
+import { Phone, Mail, Clock, Save } from "lucide-react";
 import { Button } from "../../../components/ui/button";
 import { Separator } from "../../../components/ui/separator";
 import { Checkbox } from "../../../components/ui/checkbox";
@@ -46,16 +43,12 @@ const BranchInfo = () => {
       });
     }
   }, [branch]);
+
   const handleBranchInfoChange = (field, value) => {
-    setBranchInfo({
-      ...branchInfo,
-      [field]: value,
-    });
+    setBranchInfo({ ...branchInfo, [field]: value });
   };
 
   const handleSaveSettings = (settingType) => {
-    // In a real app, this would make an API call to save the settings
-    console.log(`Saving ${settingType} settings`);
     if (settingType === "branch-info") {
       dispatch(
         updateBranch({
@@ -64,9 +57,9 @@ const BranchInfo = () => {
           jwt: localStorage.getItem("jwt"),
         })
       );
-      console.log("Saving branch info:", branchInfo);
     }
   };
+
   return (
     <Card>
       <CardHeader>
@@ -76,6 +69,8 @@ const BranchInfo = () => {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
+
+        {/* Branch Name & Address */}
         <div className="space-y-4">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="space-y-2">
@@ -101,13 +96,15 @@ const BranchInfo = () => {
               />
             </div>
           </div>
+
+          {/* Phone & Email */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <label htmlFor="branch-phone" className="text-sm font-medium">
                 Phone Number
               </label>
               <div className="flex items-center">
-                <Phone className="mr-2 h-4 w-4 text-gray-500" />
+                <Phone className="mr-2 h-4 w-4 text-gray-500 shrink-0" />
                 <Input
                   id="branch-phone"
                   value={branchInfo.phone}
@@ -122,7 +119,7 @@ const BranchInfo = () => {
                 Email Address
               </label>
               <div className="flex items-center">
-                <Mail className="mr-2 h-4 w-4 text-gray-500" />
+                <Mail className="mr-2 h-4 w-4 text-gray-500 shrink-0" />
                 <Input
                   id="branch-email"
                   type="email"
@@ -138,6 +135,7 @@ const BranchInfo = () => {
 
         <Separator />
 
+        {/* Business Hours */}
         <div>
           <h3 className="text-lg font-medium mb-4">Business Hours</h3>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -146,7 +144,7 @@ const BranchInfo = () => {
                 Opening Time
               </label>
               <div className="flex items-center">
-                <Clock className="mr-2 h-4 w-4 text-gray-500" />
+                <Clock className="mr-2 h-4 w-4 text-gray-500 shrink-0" />
                 <Input
                   id="opening-time"
                   type="time"
@@ -162,7 +160,7 @@ const BranchInfo = () => {
                 Closing Time
               </label>
               <div className="flex items-center">
-                <Clock className="mr-2 h-4 w-4 text-gray-500" />
+                <Clock className="mr-2 h-4 w-4 text-gray-500 shrink-0" />
                 <Input
                   id="closing-time"
                   type="time"
@@ -175,9 +173,10 @@ const BranchInfo = () => {
             </div>
           </div>
 
+          {/* Working Days */}
           <div className="mt-4">
             <label className="text-sm font-medium">Working Days</label>
-            <div className="grid grid-cols-2 gap-2 mt-2 md:grid-cols-4">
+            <div className="grid grid-cols-2 gap-2 mt-2 sm:grid-cols-4">
               {[
                 "Monday",
                 "Tuesday",
@@ -189,6 +188,7 @@ const BranchInfo = () => {
               ].map((day) => (
                 <div key={day} className="flex items-center space-x-2">
                   <Checkbox
+                    id={`day-${day}`}
                     checked={branchInfo.workingDays.includes(day)}
                     onCheckedChange={(checked) => {
                       if (checked) {
@@ -204,7 +204,6 @@ const BranchInfo = () => {
                       }
                     }}
                   />
-               
                   <label
                     htmlFor={`day-${day}`}
                     className="text-sm text-gray-700"
@@ -217,15 +216,17 @@ const BranchInfo = () => {
           </div>
         </div>
 
+        {/* Save Button */}
         <div className="flex justify-end">
           <Button
-            className="gap-2"
+            className="gap-2 w-full sm:w-auto"
             onClick={() => handleSaveSettings("branch-info")}
           >
             <Save className="h-4 w-4" />
             Save Changes
           </Button>
         </div>
+
       </CardContent>
     </Card>
   );

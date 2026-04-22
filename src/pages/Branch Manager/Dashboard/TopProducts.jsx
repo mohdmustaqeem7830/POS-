@@ -24,7 +24,6 @@ const TopProducts = () => {
     }
   }, [branchId, dispatch]);
 
-  // Map API data to recharts format
   const data = topProducts?.map((item) => ({
     name: item.productName,
     value: item.quantitySold,
@@ -39,28 +38,13 @@ const TopProducts = () => {
     return acc;
   }, {});
 
-  const renderCustomizedLabel = ({
-    cx,
-    cy,
-    midAngle,
-    innerRadius,
-    outerRadius,
-    percent,
-    index
-  }) => {
+  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * (Math.PI / 180));
     const y = cy + radius * Math.sin(-midAngle * (Math.PI / 180));
-    // Use percentage from data if available
     const percentValue = data[index]?.percentage ?? percent * 100;
     return (
-      <text
-        x={x}
-        y={y}
-        fill="white"
-        textAnchor="middle"
-        dominantBaseline="central"
-      >
+      <text x={x} y={y} fill="white" textAnchor="middle" dominantBaseline="central">
         {`${percentValue.toFixed(0)}%`}
       </text>
     );
@@ -69,9 +53,7 @@ const TopProducts = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-xl font-semibold">
-          Product Performance
-        </CardTitle>
+        <CardTitle className="text-xl font-semibold">Product Performance</CardTitle>
       </CardHeader>
       <CardContent>
         <ChartContainer config={config}>
@@ -87,10 +69,7 @@ const TopProducts = () => {
               dataKey="value"
             >
               {data.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
-                />
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
             <ChartTooltip
@@ -98,10 +77,7 @@ const TopProducts = () => {
                 <ChartTooltipContent
                   active={active}
                   payload={payload}
-                  formatter={(value) => [
-                    `${value}%`,
-                    "Sales Percentage"
-                  ]}
+                  formatter={(value) => [`${value}%`, "Sales Percentage"]}
                 />
               )}
             />

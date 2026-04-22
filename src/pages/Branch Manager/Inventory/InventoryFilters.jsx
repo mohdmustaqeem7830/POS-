@@ -1,37 +1,30 @@
 import React from "react";
 import { Input } from "@/components/ui/input";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
-import { Search, Filter } from "lucide-react";
+import { Filter } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const InventoryFilters = ({
-  searchTerm,
-  onSearch,
-  category,
-  onCategoryChange,
-  products,
-  inventoryRows,
+  searchTerm, onSearch, category, onCategoryChange, products, inventoryRows,
 }) => (
   <Card>
-    <CardContent className="p-6">
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 items-center">
-        <div className="relative">
+    <CardContent className="p-4 md:p-6">
+      <div className="grid gap-3 md:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Search */}
+        <div className="relative sm:col-span-2 lg:col-span-1">
           <Input
             type="search"
             placeholder="Search by name..."
-            className=""
             value={searchTerm}
             onChange={onSearch}
-           
+            className="w-full"
           />
         </div>
-        <div className="relative">
+
+        {/* Category Filter */}
+        <div>
           <Select value={category} onValueChange={onCategoryChange}>
             <SelectTrigger
               startIcon={<Filter className="h-4 w-4 text-gray-500" />}
@@ -41,21 +34,19 @@ const InventoryFilters = ({
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Categories</SelectItem>
-              {[
-                ...new Set(products.map((p) => p.category).filter(Boolean)),
-              ].map((cat) => (
-                <SelectItem key={cat} value={cat}>
-                  {cat}
-                </SelectItem>
+              {[...new Set(products.map((p) => p.category).filter(Boolean))].map((cat) => (
+                <SelectItem key={cat} value={cat}>{cat}</SelectItem>
               ))}
             </SelectContent>
           </Select>
         </div>
-        <div className="flex gap-5 items-center border p-3 rounded-md">
-          <h3 className="text-lg font-medium text-gray-500">
-            Total Quantity :{" "}
+
+        {/* Total Quantity */}
+        <div className="flex gap-3 items-center border p-3 rounded-md">
+          <h3 className="text-sm md:text-base font-medium text-gray-500 whitespace-nowrap">
+            Total Quantity:
           </h3>
-          <p className="text-xl font-bold  text-green-600">
+          <p className="text-lg md:text-xl font-bold text-green-600">
             {inventoryRows.reduce((sum, row) => sum + (row.quantity || 0), 0)}
           </p>
         </div>

@@ -1,5 +1,4 @@
-import React from "react";
-import { Input } from "@/components/ui/input";
+import React, { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -7,17 +6,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Search, Filter } from "lucide-react";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { useState } from "react";
+import { Filter } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
 import { paymentModeMap, statusMap } from "./data";
 import { getOrdersByBranch } from "../../../Redux Toolkit/features/order/orderThunks";
 
 const OrdersFilters = () => {
-
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const branchId = useSelector((state) => state.branch.branch?.id);
   const { employees } = useSelector((state) => state.employee);
 
@@ -27,91 +22,88 @@ const OrdersFilters = () => {
     status: "all",
   });
 
-    useEffect(() => {
-      if (branchId) {
-        const data = {
-          branchId,
-          cashierId: filters.cashierId !== "all" ? filters.cashierId : undefined,
-          paymentType: paymentModeMap[filters.paymentMode],
-          status: statusMap[filters.status],
-        };
-        console.log("filters data ", data);
-        dispatch(getOrdersByBranch(data));
-      }
-    }, [branchId, filters, dispatch]);
-
-
+  useEffect(() => {
+    if (branchId) {
+      const data = {
+        branchId,
+        cashierId: filters.cashierId !== "all" ? filters.cashierId : undefined,
+        paymentType: paymentModeMap[filters.paymentMode],
+        status: statusMap[filters.status],
+      };
+      dispatch(getOrdersByBranch(data));
+    }
+  }, [branchId, filters, dispatch]);
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+
       {/* Payment Mode Filter */}
-      <div>
-        <Select
-          value={filters.paymentMode}
-          onValueChange={(value) =>
-            setFilters({ ...filters, paymentMode: value })
-          }
+      <Select
+        value={filters.paymentMode}
+        onValueChange={(value) =>
+          setFilters({ ...filters, paymentMode: value })
+        }
+      >
+        <SelectTrigger
+          startIcon={<Filter className="h-4 w-4 text-gray-500" />}
+          className="w-full"
         >
-          <SelectTrigger
-            startIcon={<Filter className="h-4 w-4 text-gray-500" />}
-            className="w-full"
-          >
-            <SelectValue placeholder="All Payment Modes" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Payment Modes</SelectItem>
-            <SelectItem value="Cash">Cash</SelectItem>
-            <SelectItem value="UPI">UPI</SelectItem>
-            <SelectItem value="Card">Card</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+          <SelectValue placeholder="All Payment Modes" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">All Payment Modes</SelectItem>
+          <SelectItem value="Cash">Cash</SelectItem>
+          <SelectItem value="UPI">UPI</SelectItem>
+          <SelectItem value="Card">Card</SelectItem>
+        </SelectContent>
+      </Select>
+
       {/* Cashier Filter */}
-      <div>
-        <Select
-          value={filters.cashierId}
-          onValueChange={(value) =>
-            setFilters({ ...filters, cashierId: value })
-          }
+      <Select
+        value={filters.cashierId}
+        onValueChange={(value) =>
+          setFilters({ ...filters, cashierId: value })
+        }
+      >
+        <SelectTrigger
+          startIcon={<Filter className="h-4 w-4 text-gray-500" />}
+          className="w-full"
         >
-          <SelectTrigger
-            startIcon={<Filter className="h-4 w-4 text-gray-500" />}
-            className="w-full"
-          >
-            <SelectValue placeholder="All Cashiers" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Cashiers</SelectItem>
-            {employees &&
-              employees.map((emp) => (
-                <SelectItem key={emp.id} value={emp.id}>
-                  {emp.fullName}
-                </SelectItem>
-              ))}
-          </SelectContent>
-        </Select>
-      </div>
+          <SelectValue placeholder="All Cashiers" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">All Cashiers</SelectItem>
+          {employees &&
+            employees.map((emp) => (
+              <SelectItem key={emp.id} value={emp.id}>
+                {emp.fullName}
+              </SelectItem>
+            ))}
+        </SelectContent>
+      </Select>
+
       {/* Status Filter */}
-      <div>
-        <Select
-          value={filters.status}
-          onValueChange={(value) => setFilters({ ...filters, status: value })}
+      <Select
+        value={filters.status}
+        onValueChange={(value) =>
+          setFilters({ ...filters, status: value })
+        }
+      >
+        <SelectTrigger
+          startIcon={<Filter className="h-4 w-4 text-gray-500" />}
+          className="w-full"
         >
-          <SelectTrigger
-            startIcon={<Filter className="h-4 w-4 text-gray-500" />}
-            className="w-full"
-          >
-            <SelectValue placeholder="All Status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Status</SelectItem>
-            <SelectItem value="Completed">Completed</SelectItem>
-            <SelectItem value="Pending">Pending</SelectItem>
-            <SelectItem value="Cancelled">Cancelled</SelectItem>
-            <SelectItem value="Refunded">Refunded</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+          <SelectValue placeholder="All Status" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">All Status</SelectItem>
+          <SelectItem value="Completed">Completed</SelectItem>
+          <SelectItem value="Pending">Pending</SelectItem>
+          <SelectItem value="Cancelled">Cancelled</SelectItem>
+          <SelectItem value="Refunded">Refunded</SelectItem>
+        </SelectContent>
+      </Select>
+
     </div>
   );
 };

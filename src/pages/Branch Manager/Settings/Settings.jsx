@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -19,7 +18,6 @@ import {
 } from "@/components/ui/select";
 import {
   Building,
-
   Printer,
   Receipt,
   CreditCard,
@@ -33,17 +31,6 @@ import BranchInfo from "./BranchInfo";
 const Settings = () => {
   const dispatch = useDispatch();
   const { userProfile } = useSelector((state) => state.user);
-  // const { branch} = useSelector((state) => state.branch);
-
-  // const [branchInfo, setBranchInfo] = useState({
-  //   name: "",
-  //   address: "",
-  //   phone: "",
-  //   email: "",
-  //   openingTime: "",
-  //   closingTime: "",
-  //   workingDays: [],
-  // });
 
   useEffect(() => {
     if (userProfile?.branchId && localStorage.getItem("jwt")) {
@@ -92,70 +79,74 @@ const Settings = () => {
     ],
   });
 
-  const handlePrinterSettingsChange = (field, value) => {
-    setPrinterSettings({
-      ...printerSettings,
-      [field]: value,
-    });
-  };
+  const handlePrinterSettingsChange = (field, value) =>
+    setPrinterSettings({ ...printerSettings, [field]: value });
 
-  const handleTaxSettingsChange = (field, value) => {
-    setTaxSettings({
-      ...taxSettings,
-      [field]: value,
-    });
-  };
+  const handleTaxSettingsChange = (field, value) =>
+    setTaxSettings({ ...taxSettings, [field]: value });
 
-  const handlePaymentSettingsChange = (field, value) => {
-    setPaymentSettings({
-      ...paymentSettings,
-      [field]: value,
-    });
-  };
+  const handlePaymentSettingsChange = (field, value) =>
+    setPaymentSettings({ ...paymentSettings, [field]: value });
 
-  const handleDiscountSettingsChange = (field, value) => {
-    setDiscountSettings({
-      ...discountSettings,
-      [field]: value,
-    });
-  };
+  const handleDiscountSettingsChange = (field, value) =>
+    setDiscountSettings({ ...discountSettings, [field]: value });
 
   const handleSaveSettings = (settingType) => {
     console.log(`Saving ${settingType} settings`);
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold tracking-tight">Branch Settings</h1>
+    <div className="space-y-6 p-4 sm:p-6">
+
+      {/* Header */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
+          Branch Settings
+        </h1>
       </div>
 
       <Tabs defaultValue="branch-info">
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="branch-info" className="flex items-center gap-2">
-            <Building className="h-4 w-4" />
-            Branch Info
+
+        {/* TabsList — scrollable on mobile */}
+        <TabsList className="flex w-full overflow-x-auto h-auto flex-nowrap gap-1 sm:grid sm:grid-cols-5">
+          <TabsTrigger
+            value="branch-info"
+            className="flex items-center gap-1 whitespace-nowrap text-xs sm:text-sm"
+          >
+            <Building className="h-4 w-4 shrink-0" />
+            <span>Branch Info</span>
           </TabsTrigger>
-          <TabsTrigger value="printer" className="flex items-center gap-2">
-            <Printer className="h-4 w-4" />
-            Printer
+          <TabsTrigger
+            value="printer"
+            className="flex items-center gap-1 whitespace-nowrap text-xs sm:text-sm"
+          >
+            <Printer className="h-4 w-4 shrink-0" />
+            <span>Printer</span>
           </TabsTrigger>
-          <TabsTrigger value="tax" className="flex items-center gap-2">
-            <Receipt className="h-4 w-4" />
-            Tax
+          <TabsTrigger
+            value="tax"
+            className="flex items-center gap-1 whitespace-nowrap text-xs sm:text-sm"
+          >
+            <Receipt className="h-4 w-4 shrink-0" />
+            <span>Tax</span>
           </TabsTrigger>
-          <TabsTrigger value="payment" className="flex items-center gap-2">
-            <CreditCard className="h-4 w-4" />
-            Payment
+          <TabsTrigger
+            value="payment"
+            className="flex items-center gap-1 whitespace-nowrap text-xs sm:text-sm"
+          >
+            <CreditCard className="h-4 w-4 shrink-0" />
+            <span>Payment</span>
           </TabsTrigger>
-          <TabsTrigger value="discount" className="flex items-center gap-2">
-            <CreditCard className="h-4 w-4" />
-            Discount
+          <TabsTrigger
+            value="discount"
+            className="flex items-center gap-1 whitespace-nowrap text-xs sm:text-sm"
+          >
+            <CreditCard className="h-4 w-4 shrink-0" />
+            <span>Discount</span>
           </TabsTrigger>
         </TabsList>
 
         {/* Branch Info Tab */}
-
         <TabsContent value="branch-info">
           <BranchInfo />
         </TabsContent>
@@ -173,20 +164,14 @@ const Settings = () => {
               <div className="space-y-4">
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <div className="space-y-2">
-                    <label
-                      htmlFor="printer-name"
-                      className="text-sm font-medium"
-                    >
+                    <label htmlFor="printer-name" className="text-sm font-medium">
                       Printer Name
                     </label>
                     <Input
                       id="printer-name"
                       value={printerSettings.printerName}
                       onChange={(e) =>
-                        handlePrinterSettingsChange(
-                          "printerName",
-                          e.target.value
-                        )
+                        handlePrinterSettingsChange("printerName", e.target.value)
                       }
                     />
                   </div>
@@ -224,26 +209,18 @@ const Settings = () => {
                       }
                     />
                   </div>
-
                   <div className="flex items-center justify-between">
-                    <label
-                      htmlFor="print-customer"
-                      className="text-sm font-medium"
-                    >
+                    <label htmlFor="print-customer" className="text-sm font-medium">
                       Print Customer Details
                     </label>
                     <Switch
                       id="print-customer"
                       checked={printerSettings.printCustomerDetails}
                       onCheckedChange={(checked) =>
-                        handlePrinterSettingsChange(
-                          "printCustomerDetails",
-                          checked
-                        )
+                        handlePrinterSettingsChange("printCustomerDetails", checked)
                       }
                     />
                   </div>
-
                   <div className="flex items-center justify-between">
                     <label htmlFor="print-tax" className="text-sm font-medium">
                       Print Itemized Tax
@@ -274,7 +251,7 @@ const Settings = () => {
 
               <div className="flex justify-end">
                 <Button
-                  className="gap-2"
+                  className="gap-2 w-full sm:w-auto"
                   onClick={() => handleSaveSettings("printer")}
                 >
                   <Save className="h-4 w-4" />
@@ -310,12 +287,9 @@ const Settings = () => {
                 </div>
 
                 {taxSettings.gstEnabled && (
-                  <div className="space-y-4 pl-6 border-l-2 border-gray-100">
+                  <div className="space-y-4 pl-4 sm:pl-6 border-l-2 border-gray-100">
                     <div className="space-y-2">
-                      <label
-                        htmlFor="gst-percentage"
-                        className="text-sm font-medium"
-                      >
+                      <label htmlFor="gst-percentage" className="text-sm font-medium">
                         GST Percentage (%)
                       </label>
                       <Input
@@ -332,12 +306,8 @@ const Settings = () => {
                         }
                       />
                     </div>
-
                     <div className="flex items-center justify-between">
-                      <label
-                        htmlFor="apply-gst-all"
-                        className="text-sm font-medium"
-                      >
+                      <label htmlFor="apply-gst-all" className="text-sm font-medium">
                         Apply GST to All Products
                       </label>
                       <Switch
@@ -348,12 +318,8 @@ const Settings = () => {
                         }
                       />
                     </div>
-
                     <div className="flex items-center justify-between">
-                      <label
-                        htmlFor="show-tax-breakdown"
-                        className="text-sm font-medium"
-                      >
+                      <label htmlFor="show-tax-breakdown" className="text-sm font-medium">
                         Show Tax Breakdown on Receipt
                       </label>
                       <Switch
@@ -370,7 +336,7 @@ const Settings = () => {
 
               <div className="flex justify-end">
                 <Button
-                  className="gap-2"
+                  className="gap-2 w-full sm:w-auto"
                   onClick={() => handleSaveSettings("tax")}
                 >
                   <Save className="h-4 w-4" />
@@ -419,7 +385,7 @@ const Settings = () => {
                 </div>
 
                 {paymentSettings.acceptUPI && (
-                  <div className="space-y-2 pl-6 border-l-2 border-gray-100">
+                  <div className="space-y-2 pl-4 sm:pl-6 border-l-2 border-gray-100">
                     <label htmlFor="upi-id" className="text-sm font-medium">
                       Branch UPI ID
                     </label>
@@ -447,11 +413,8 @@ const Settings = () => {
                 </div>
 
                 {paymentSettings.acceptCard && (
-                  <div className="space-y-2 pl-6 border-l-2 border-gray-100">
-                    <label
-                      htmlFor="terminal-id"
-                      className="text-sm font-medium"
-                    >
+                  <div className="space-y-2 pl-4 sm:pl-6 border-l-2 border-gray-100">
+                    <label htmlFor="terminal-id" className="text-sm font-medium">
                       Card Terminal ID
                     </label>
                     <Input
@@ -470,7 +433,7 @@ const Settings = () => {
 
               <div className="flex justify-end">
                 <Button
-                  className="gap-2"
+                  className="gap-2 w-full sm:w-auto"
                   onClick={() => handleSaveSettings("payment")}
                 >
                   <Save className="h-4 w-4" />
@@ -493,10 +456,7 @@ const Settings = () => {
             <CardContent className="space-y-6">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <label
-                    htmlFor="allow-discount"
-                    className="text-sm font-medium"
-                  >
+                  <label htmlFor="allow-discount" className="text-sm font-medium">
                     Allow Discounts
                   </label>
                   <Switch
@@ -509,12 +469,9 @@ const Settings = () => {
                 </div>
 
                 {discountSettings.allowDiscount && (
-                  <div className="space-y-4 pl-6 border-l-2 border-gray-100">
+                  <div className="space-y-4 pl-4 sm:pl-6 border-l-2 border-gray-100">
                     <div className="space-y-2">
-                      <label
-                        htmlFor="max-discount"
-                        className="text-sm font-medium"
-                      >
+                      <label htmlFor="max-discount" className="text-sm font-medium">
                         Maximum Discount Percentage (%)
                       </label>
                       <Input
@@ -535,7 +492,7 @@ const Settings = () => {
                     <div className="flex items-center justify-between">
                       <label
                         htmlFor="manager-approval"
-                        className="text-sm font-medium"
+                        className="text-sm font-medium pr-4"
                       >
                         Require Manager Approval for Discounts
                       </label>
@@ -556,47 +513,43 @@ const Settings = () => {
                         Discount Reasons
                       </label>
                       <div className="space-y-2">
-                        {discountSettings.discountReasons.map(
-                          (reason, index) => (
-                            <div
-                              key={index}
-                              className="flex items-center gap-2"
+                        {discountSettings.discountReasons.map((reason, index) => (
+                          <div key={index} className="flex items-center gap-2">
+                            <Input
+                              value={reason}
+                              onChange={(e) => {
+                                const updatedReasons = [
+                                  ...discountSettings.discountReasons,
+                                ];
+                                updatedReasons[index] = e.target.value;
+                                handleDiscountSettingsChange(
+                                  "discountReasons",
+                                  updatedReasons
+                                );
+                              }}
+                            />
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => {
+                                const updatedReasons =
+                                  discountSettings.discountReasons.filter(
+                                    (_, i) => i !== index
+                                  );
+                                handleDiscountSettingsChange(
+                                  "discountReasons",
+                                  updatedReasons
+                                );
+                              }}
                             >
-                              <Input
-                                value={reason}
-                                onChange={(e) => {
-                                  const updatedReasons = [
-                                    ...discountSettings.discountReasons,
-                                  ];
-                                  updatedReasons[index] = e.target.value;
-                                  handleDiscountSettingsChange(
-                                    "discountReasons",
-                                    updatedReasons
-                                  );
-                                }}
-                              />
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                onClick={() => {
-                                  const updatedReasons =
-                                    discountSettings.discountReasons.filter(
-                                      (_, i) => i !== index
-                                    );
-                                  handleDiscountSettingsChange(
-                                    "discountReasons",
-                                    updatedReasons
-                                  );
-                                }}
-                              >
-                                ✕
-                              </Button>
-                            </div>
-                          )
-                        )}
+                              ✕
+                            </Button>
+                          </div>
+                        ))}
                         <Button
                           variant="outline"
                           size="sm"
+                          className="w-full sm:w-auto"
                           onClick={() => {
                             handleDiscountSettingsChange("discountReasons", [
                               ...discountSettings.discountReasons,
@@ -614,7 +567,7 @@ const Settings = () => {
 
               <div className="flex justify-end">
                 <Button
-                  className="gap-2"
+                  className="gap-2 w-full sm:w-auto"
                   onClick={() => handleSaveSettings("discount")}
                 >
                   <Save className="h-4 w-4" />
@@ -624,6 +577,7 @@ const Settings = () => {
             </CardContent>
           </Card>
         </TabsContent>
+
       </Tabs>
     </div>
   );

@@ -1,17 +1,9 @@
 import React from "react";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
+  Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
 } from "@/components/ui/dialog";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,31 +11,24 @@ import { Filter } from "lucide-react";
 import { useSelector } from "react-redux";
 
 const InventoryFormDialog = ({
-  open,
-  onOpenChange,
-  selectedProductId,
-  setSelectedProductId,
-  quantity,
-  setQuantity,
-  onSubmit,
-  mode = "add",
+  open, onOpenChange, selectedProductId, setSelectedProductId,
+  quantity, setQuantity, onSubmit, mode = "add",
 }) => {
   const products = useSelector((state) => state.product.products);
   const isEdit = mode === "edit";
-  const selectedProduct = products.find(
-    (p) => String(p.id) === String(selectedProductId)
-  );
+  const selectedProduct = products.find((p) => String(p.id) === String(selectedProductId));
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="w-[95vw] max-w-md rounded-xl mx-auto">
         <DialogHeader>
-          <DialogTitle>
-            {isEdit ? "Edit Inventory" : "Add Inventory"}
-          </DialogTitle>
+          <DialogTitle>{isEdit ? "Edit Inventory" : "Add Inventory"}</DialogTitle>
         </DialogHeader>
+
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <label htmlFor="product" className="text-right">
+          {/* Product Row */}
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="product" className="text-sm font-medium">
               Product
             </label>
             {isEdit ? (
@@ -51,49 +36,34 @@ const InventoryFormDialog = ({
                 id="product"
                 value={selectedProduct?.name || ""}
                 disabled
-                className="col-span-3"
+                className="w-full"
               />
             ) : (
-              <>
-                {/* <Select
-                  value={selectedProductId}
-                  onValueChange={(value) => setSelectedProductId(value)}
+              <Select
+                value={selectedProductId}
+                onValueChange={(value) => setSelectedProductId(value)}
+              >
+                <SelectTrigger
+                  startIcon={<Filter className="h-4 w-4 text-gray-500" />}
+                  className="w-full"
                 >
-                  <SelectTrigger className="col-span-3">
-                    <SelectValue placeholder="Select a product" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {products.map((product) => (
-                      <SelectItem key={product.id} value={String(product.id)}>
-                        {product.name} ({product.sku})
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select> */}
-                <Select
-                  value={selectedProductId}
-                  onValueChange={(value) => setSelectedProductId(value)}
-                >
-                  <SelectTrigger
-                    startIcon={<Filter className="h-4 w-4 text-gray-500" />}
-                    className="w-full col-span-3"
-                  >
-                    <SelectValue placeholder="Select a Product" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Products</SelectItem>
-                    {products.map((product) => (
-                      <SelectItem key={product.id} value={product.id}>
-                        {product.sku}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </>
+                  <SelectValue placeholder="Select a Product" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Products</SelectItem>
+                  {products.map((product) => (
+                    <SelectItem key={product.id} value={product.id}>
+                      {product.sku}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             )}
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <label htmlFor="quantity" className="text-right">
+
+          {/* Quantity Row */}
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="quantity" className="text-sm font-medium">
               Quantity
             </label>
             <Input
@@ -102,15 +72,16 @@ const InventoryFormDialog = ({
               min={1}
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
-              className="col-span-3"
+              className="w-full"
             />
           </div>
         </div>
-        <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
+
+        <DialogFooter className="flex flex-col-reverse sm:flex-row gap-2 sm:gap-0">
+          <Button variant="outline" className="w-full sm:w-auto" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button onClick={onSubmit}>
+          <Button className="w-full sm:w-auto" onClick={onSubmit}>
             {isEdit ? "Update Inventory" : "Add Inventory"}
           </Button>
         </DialogFooter>

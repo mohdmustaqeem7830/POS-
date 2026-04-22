@@ -16,9 +16,6 @@ const SalesChart = () => {
     }
   }, [branchId, dispatch]);
 
-
-
-  // Map API data to recharts format
   const data = analytics?.dailySales?.map((item) => ({
     name: item.date,
     sales: item.totalSales,
@@ -38,18 +35,18 @@ const SalesChart = () => {
       </CardHeader>
       <CardContent>
         <ChartContainer config={config}>
-          <ResponsiveContainer width="100%" height={320}>
+          <ResponsiveContainer width="100%" height={280}>
             <BarChart data={data}>
               <XAxis
                 dataKey="name"
                 stroke="#888888"
-                fontSize={12}
+                fontSize={11}
                 tickLine={false}
                 axisLine={false}
               />
               <YAxis
                 stroke="#888888"
-                fontSize={12}
+                fontSize={11}
                 tickLine={false}
                 axisLine={false}
                 tickFormatter={(value) => `₹${value}`}
@@ -72,7 +69,9 @@ const SalesChart = () => {
             </BarChart>
           </ResponsiveContainer>
         </ChartContainer>
-        {analytics?.loading && <div className="text-center text-xs text-gray-400 mt-2">Loading...</div>}
+        {analytics?.loading && (
+          <div className="text-center text-xs text-gray-400 mt-2">Loading...</div>
+        )}
       </CardContent>
     </Card>
   );

@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-
 import OrderItemTable from "../../common/Order/OrderItemTable";
 
 const OrderDetailsDialog = ({
@@ -20,15 +19,20 @@ const OrderDetailsDialog = ({
 }) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="w-[95vw] max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Order Details</DialogTitle>
         </DialogHeader>
+
         {selectedOrder && (
           <div className="space-y-4">
-            {/* Order Summary */}
+
+            {/* Order Summary + Customer Details */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
+
+              {/* Order Info */}
+              <div className="space-y-1">
+                <p className="font-semibold mb-1">Order Info</p>
                 <div>
                   <strong>Order ID:</strong> {selectedOrder.id}
                 </div>
@@ -38,14 +42,14 @@ const OrderDetailsDialog = ({
                     ? selectedOrder.createdAt.slice(0, 10)
                     : "-"}
                 </div>
-                <div>
-                  <strong>Status:</strong>{" "}
+                <div className="flex items-center gap-2 flex-wrap">
+                  <strong>Status:</strong>
                   <Badge className={getStatusColor(selectedOrder.status)}>
                     {selectedOrder.status}
                   </Badge>
                 </div>
-                <div>
-                  <strong>Payment:</strong>{" "}
+                <div className="flex items-center gap-1 flex-wrap">
+                  <strong>Payment:</strong>
                   <span className="inline-flex items-center gap-1">
                     {getPaymentIcon(selectedOrder.paymentType)}{" "}
                     {selectedOrder.paymentType || "-"}
@@ -58,8 +62,10 @@ const OrderDetailsDialog = ({
                     : "-"}
                 </div>
               </div>
-              <div>
-                <div className="font-semibold mb-1">Customer Details</div>
+
+              {/* Customer Info */}
+              <div className="space-y-1">
+                <p className="font-semibold mb-1">Customer Details</p>
                 <div>
                   <strong>Name:</strong>{" "}
                   {selectedOrder.customer?.name ||
@@ -67,10 +73,14 @@ const OrderDetailsDialog = ({
                     "-"}
                 </div>
                 <div>
-                  <strong>Phone:</strong> {selectedOrder.customer?.phone || "-"}
+                  <strong>Phone:</strong>{" "}
+                  {selectedOrder.customer?.phone || "-"}
                 </div>
                 <div>
-                  <strong>Email:</strong> {selectedOrder.customer?.email || "-"}
+                  <strong>Email:</strong>{" "}
+                  <span className="break-all">
+                    {selectedOrder.customer?.email || "-"}
+                  </span>
                 </div>
                 <div>
                   <strong>Address:</strong>{" "}
@@ -78,9 +88,10 @@ const OrderDetailsDialog = ({
                 </div>
               </div>
             </div>
+
             {/* Cashier Details */}
-            <div className="font-semibold mt-2 mb-1">Cashier Details</div>
-            <div className="mb-2">
+            <div>
+              <p className="font-semibold mb-1">Cashier Details</p>
               <div>
                 <strong>Name:</strong>{" "}
                 {selectedOrder.cashier?.name ||
@@ -90,19 +101,26 @@ const OrderDetailsDialog = ({
               </div>
               <div>
                 <strong>ID:</strong>{" "}
-                {selectedOrder.cashier?.id || selectedOrder.cashierId || "-"}
+                {selectedOrder.cashier?.id ||
+                  selectedOrder.cashierId ||
+                  "-"}
               </div>
             </div>
+
             {/* Order Items */}
-            <div className="font-semibold mb-1">Order Items</div>
-            <div className="overflow-x-auto">
-              <OrderItemTable selectedOrder={selectedOrder} />
+            <div>
+              <p className="font-semibold mb-1">Order Items</p>
+              <div className="overflow-x-auto">
+                <OrderItemTable selectedOrder={selectedOrder} />
+              </div>
             </div>
+
             <DialogClose asChild>
-              <Button className="mt-4 w-full" variant="outline">
+              <Button className="mt-2 w-full" variant="outline">
                 Close
               </Button>
             </DialogClose>
+
           </div>
         )}
       </DialogContent>

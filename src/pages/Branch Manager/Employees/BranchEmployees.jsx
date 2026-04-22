@@ -32,7 +32,6 @@ const getStatusColor = (status) => {
 };
 
 const BranchEmployees = () => {
-  // const [employees, setEmployees] = useState([]); // Initialize with empty array
   const [searchTerm, setSearchTerm] = useState("");
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -41,13 +40,9 @@ const BranchEmployees = () => {
   const [isPerformanceDialogOpen, setIsPerformanceDialogOpen] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const dispatch = useDispatch();
-  // const { store } = useSelector((state) => state);
   const { branch } = useSelector((state) => state.branch);
-  const {employees}=useSelector((state)=>state.employee)
+  const { employees } = useSelector((state) => state.employee);
   const { userProfile } = useSelector((state) => state.user);
-
-
-  console.log("branch employees", employees);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -58,13 +53,11 @@ const BranchEmployees = () => {
       const data = {
         employee: {
           ...newEmployeeData,
-
           username: newEmployeeData.email.split("@")[0],
         },
         branchId: branch.id,
         token: localStorage.getItem("jwt"),
       };
-      console.log("branch employee data ", data);
       dispatch(createBranchEmployee(data));
       setIsAddDialogOpen(false);
     }
@@ -72,41 +65,25 @@ const BranchEmployees = () => {
 
   const handleEditEmployee = (updatedEmployeeData) => {
     if (selectedEmployee?.id && localStorage.getItem("jwt")) {
-      const data={
-          employeeId: selectedEmployee.id,
-          employeeDetails: updatedEmployeeData,
-          token: localStorage.getItem("jwt"),
-
-        }
-      dispatch(
-        updateEmployee(data)
-      );
+      const data = {
+        employeeId: selectedEmployee.id,
+        employeeDetails: updatedEmployeeData,
+        token: localStorage.getItem("jwt"),
+      };
+      dispatch(updateEmployee(data));
       setIsEditDialogOpen(false);
     }
   };
 
-    useEffect(() => {
-      if (branch?.id) {
-        dispatch(
-          findBranchEmployees({
-            branchId: branch?.id
-          })
-        );
-      }
-    }, [dispatch, branch?.id]);
-
-  // const handleEditEmployee = (updatedEmployeeData) => {
-  //   const updatedEmployees = employees.map((employee) =>
-  //     employee.id === updatedEmployeeData.id
-  //       ? {
-  //           ...updatedEmployeeData,
-  //           status: updatedEmployeeData.loginAccess ? "Active" : "Inactive",
-  //         }
-  //       : employee
-  //   );
-  //   setEmployees(updatedEmployees);
-  //   setIsEditDialogOpen(false);
-  // };
+  useEffect(() => {
+    if (branch?.id) {
+      dispatch(
+        findBranchEmployees({
+          branchId: branch?.id,
+        })
+      );
+    }
+  }, [dispatch, branch?.id]);
 
   const handleToggleAccess = (employee) => {
     const updatedEmployees = employees.map((emp) =>
@@ -118,7 +95,6 @@ const BranchEmployees = () => {
           }
         : emp
     );
-    // setEmployees(updatedEmployees);
   };
 
   const handleResetPassword = () => {
@@ -142,9 +118,10 @@ const BranchEmployees = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold tracking-tight">
+    <div className="space-y-6 p-4 sm:p-6">
+      {/* Header */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
           Employee Management
         </h1>
         <AddEmployeeDialog
@@ -154,6 +131,7 @@ const BranchEmployees = () => {
           roles={branchAdminRole}
         />
       </div>
+
       <EmployeeStats employees={employees} />
       <EmployeeTable
         employees={employees}

@@ -28,71 +28,6 @@ import { clearCustomerOrders } from "../../../Redux Toolkit/features/order/order
 import { getOrdersByCustomer } from "../../../Redux Toolkit/features/order/orderThunks";
 
 const Customers = () => {
-  // Sample data - in a real app, this would come from an API
-  const initialCustomers = [
-    {
-      id: 1,
-      name: "Rahul Mehta",
-      phone: "+91 9876543200",
-      email: "rahul.mehta@example.com",
-      totalOrders: 12,
-      totalSpent: "₹8,450",
-      lastOrder: "2023-08-10",
-      loyaltyStatus: "Gold",
-    },
-    {
-      id: 2,
-      name: "Sneha Gupta",
-      phone: "+91 9876543201",
-      email: "sneha.gupta@example.com",
-      totalOrders: 8,
-      totalSpent: "₹5,200",
-      lastOrder: "2023-08-05",
-      loyaltyStatus: "Silver",
-    },
-    {
-      id: 3,
-      name: "Arjun Sharma",
-      phone: "+91 9876543202",
-      email: "arjun.sharma@example.com",
-      totalOrders: 5,
-      totalSpent: "₹3,100",
-      lastOrder: "2023-07-28",
-      loyaltyStatus: "Bronze",
-    },
-    {
-      id: 4,
-      name: "Meera Patel",
-      phone: "+91 9876543203",
-      email: "meera.patel@example.com",
-      totalOrders: 15,
-      totalSpent: "₹12,750",
-      lastOrder: "2023-08-12",
-      loyaltyStatus: "Gold",
-    },
-    {
-      id: 5,
-      name: "Vikrant Singh",
-      phone: "+91 9876543204",
-      email: "vikrant.singh@example.com",
-      totalOrders: 3,
-      totalSpent: "₹1,850",
-      lastOrder: "2023-07-15",
-      loyaltyStatus: "Bronze",
-    },
-    {
-      id: 6,
-      name: "Priya Desai",
-      phone: "+91 9876543205",
-      email: "priya.desai@example.com",
-      totalOrders: 7,
-      totalSpent: "₹4,900",
-      lastOrder: "2023-08-01",
-      loyaltyStatus: "Silver",
-    },
-  ];
-
-  // Sample order history data
   const sampleOrderHistory = [
     {
       id: "ORD-7891",
@@ -129,7 +64,6 @@ const Customers = () => {
   ];
 
   const { customerOrders } = useSelector((state) => state.order);
-
   const { customers } = useSelector((state) => state.customer);
   const [searchTerm, setSearchTerm] = useState("");
   const [isCustomerDetailsOpen, setIsCustomerDetailsOpen] = useState(false);
@@ -137,7 +71,6 @@ const Customers = () => {
   const [orderHistory, setOrderHistory] = useState(sampleOrderHistory);
   const dispatch = useDispatch();
 
-  // Filter customers based on search term
   const filteredCustomers = customers.filter((customer) => {
     return (
       customer.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -169,43 +102,39 @@ const Customers = () => {
 
   const openCustomerDetails = (customer) => {
     setSelectedCustomer(customer);
-    // In a real app, you would fetch the customer's order history here
     setIsCustomerDetailsOpen(true);
     dispatch(clearCustomerOrders());
-    // Fetch customer orders
     if (customer.id) {
       dispatch(getOrdersByCustomer(customer.id));
     }
   };
 
-  console.log("customerOrders", customerOrders);
   const customerStats = selectedCustomer
     ? calculateCustomerStats(customerOrders)
     : null;
 
   const displayCustomer = selectedCustomer
-    ? {
-        ...selectedCustomer,
-        ...customerStats,
-      }
+    ? { ...selectedCustomer, ...customerStats }
     : null;
 
-  console.log("display customer ", displayCustomer);
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold tracking-tight">Customer Overview</h1>
+    <div className="space-y-6 p-4 sm:p-6">
+      {/* Header */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
+          Customer Overview
+        </h1>
       </div>
 
       {/* Search */}
       <Card>
-        <CardContent className="p-6">
-          <div className="relative w-full max-w-sm">
+        <CardContent className="p-4 sm:p-6">
+          <div className="relative w-full sm:max-w-sm">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
             <Input
               type="search"
               placeholder="Search customers..."
-              className="pl-8"
+              className="pl-8 w-full"
               value={searchTerm}
               onChange={handleSearch}
             />
@@ -214,7 +143,7 @@ const Customers = () => {
       </Card>
 
       {/* Customer Stats */}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Card>
           <CardContent className="p-6">
             <div className="flex flex-col items-center justify-center">
@@ -256,60 +185,99 @@ const Customers = () => {
         </Card>
       </div>
 
-      {/* Customers Table */}
+      {/* Customer List */}
       <Card>
         <CardHeader>
           <CardTitle className="text-xl font-semibold">Customer List</CardTitle>
         </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Contact</TableHead>
+        <CardContent className="p-4 sm:p-6">
 
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredCustomers.length > 0 ? (
-                filteredCustomers.map((customer) => (
-                  <TableRow key={customer.id}>
-                    <TableCell className="font-medium">
-                      {customer.fullName}
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex flex-col">
-                        <span className="text-sm">{customer.phone}</span>
-                        <span className="text-xs text-gray-500">
-                          {customer.email}
-                        </span>
-                      </div>
-                    </TableCell>
-        
-                    <TableCell className="text-right">
+          {/* ── MOBILE: Card layout — hidden on md+ ── */}
+          <div className="flex flex-col gap-3 md:hidden">
+            {filteredCustomers.length > 0 ? (
+              filteredCustomers.map((customer) => (
+                <Card key={customer.id}>
+                  <CardContent className="p-4 space-y-2">
+                    <div className="flex justify-between items-start">
+                      <p className="font-semibold text-base">
+                        {customer.fullName}
+                      </p>
                       <Button
                         variant="outline"
                         size="sm"
                         onClick={() => openCustomerDetails(customer)}
                       >
-                        View Details
+                        View
                       </Button>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <Phone className="h-3.5 w-3.5 text-gray-400" />
+                      {customer.phone}
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-gray-500">
+                      <Mail className="h-3.5 w-3.5 text-gray-400" />
+                      {customer.email}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))
+            ) : (
+              <p className="text-center py-6 text-gray-500">
+                No customers found matching your criteria
+              </p>
+            )}
+          </div>
+
+          {/* ── DESKTOP: Table layout — hidden on mobile ── */}
+          <div className="hidden md:block">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Contact</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredCustomers.length > 0 ? (
+                  filteredCustomers.map((customer) => (
+                    <TableRow key={customer.id}>
+                      <TableCell className="font-medium">
+                        {customer.fullName}
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex flex-col">
+                          <span className="text-sm">{customer.phone}</span>
+                          <span className="text-xs text-gray-500">
+                            {customer.email}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => openCustomerDetails(customer)}
+                        >
+                          View Details
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={3}
+                      className="text-center py-4 text-gray-500"
+                    >
+                      No customers found matching your criteria
                     </TableCell>
                   </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={7}
-                    className="text-center py-4 text-gray-500"
-                  >
-                    No customers found matching your criteria
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+
         </CardContent>
       </Card>
 
@@ -319,23 +287,26 @@ const Customers = () => {
           open={isCustomerDetailsOpen}
           onOpenChange={setIsCustomerDetailsOpen}
         >
-          <DialogContent className="h-[93vh] overflow-y-auto ">
+          <DialogContent className="w-[95vw] max-w-2xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Customer Details</DialogTitle>
             </DialogHeader>
-            <div className=" py-4 space-y-5">
-              {/* Customer Info */}
-              <>
-                <CardHeader>
+
+            <div className="py-4 space-y-5">
+              {/* Profile Section */}
+              <div>
+                <CardHeader className="px-0 pt-0">
                   <CardTitle className="text-lg font-semibold">
                     Profile
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="px-0">
                   <div className="space-y-4">
-                    <div className="flex justify-between">
+
+                    {/* Row 1: Name + Email */}
+                    <div className="flex flex-col gap-3 sm:flex-row sm:justify-between">
                       <div className="flex items-center gap-3">
-                        <User className="h-5 w-5 text-gray-500" />
+                        <User className="h-5 w-5 text-gray-500 shrink-0" />
                         <div>
                           <p className="text-sm font-medium">Name</p>
                           <p className="text-sm text-gray-500">
@@ -343,20 +314,21 @@ const Customers = () => {
                           </p>
                         </div>
                       </div>
-
                       <div className="flex items-center gap-3">
-                        <Mail className="h-5 w-5 text-gray-500" />
+                        <Mail className="h-5 w-5 text-gray-500 shrink-0" />
                         <div>
                           <p className="text-sm font-medium">Email</p>
-                          <p className="text-sm text-gray-500">
+                          <p className="text-sm text-gray-500 break-all">
                             {selectedCustomer.email}
                           </p>
                         </div>
                       </div>
                     </div>
-                    <div className="flex justify-between">
+
+                    {/* Row 2: Phone + Total Orders */}
+                    <div className="flex flex-col gap-3 sm:flex-row sm:justify-between">
                       <div className="flex items-center gap-3">
-                        <Phone className="h-5 w-5 text-gray-500" />
+                        <Phone className="h-5 w-5 text-gray-500 shrink-0" />
                         <div>
                           <p className="text-sm font-medium">Phone</p>
                           <p className="text-sm text-gray-500">
@@ -365,7 +337,7 @@ const Customers = () => {
                         </div>
                       </div>
                       <div className="flex items-center gap-3">
-                        <ShoppingBag className="h-5 w-5 text-gray-500" />
+                        <ShoppingBag className="h-5 w-5 text-gray-500 shrink-0" />
                         <div>
                           <p className="text-sm font-medium">Total Orders</p>
                           <p className="text-sm text-gray-500">
@@ -374,59 +346,100 @@ const Customers = () => {
                         </div>
                       </div>
                     </div>
+
                   </div>
                 </CardContent>
-              </>
+              </div>
 
               {/* Order History */}
-              <Card className="">
+              <Card>
                 <CardHeader>
                   <CardTitle className="text-lg font-semibold">
                     Order History
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Order ID</TableHead>
-                       
-                        <TableHead>Amount</TableHead>
-                        <TableHead>Items</TableHead>
-                        <TableHead>Payment</TableHead>
-                        <TableHead>Status</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {customerOrders?.map((order) => (
-                        <TableRow key={order.id}>
-                          <TableCell className="font-medium">
-                            {order.id}
-                          </TableCell>
-                         
-                          <TableCell>{order.totalAmount}</TableCell>
-                          <TableCell>{order.items.map((orderItem)=><p>{
-                            orderItem.product?.name?.slice(0,15)}...</p>)}</TableCell>
-                          <TableCell>{order.paymentType}</TableCell>
-                          <TableCell>
+                <CardContent className="p-4 sm:p-6">
+
+                  {/* ── MOBILE: Order Cards ── */}
+                  <div className="flex flex-col gap-3 md:hidden">
+                    {customerOrders?.map((order) => (
+                      <Card key={order.id}>
+                        <CardContent className="p-3 space-y-2">
+                          <div className="flex justify-between items-center">
+                            <p className="font-semibold text-sm">#{order.id}</p>
                             <Badge
                               className={getStatusColor(order.status)}
                               variant="secondary"
                             >
                               {order.status}
                             </Badge>
-                          </TableCell>
+                          </div>
+                          <div className="flex justify-between text-sm text-gray-600">
+                            <span>Amount: {order.totalAmount}</span>
+                            <span>Payment: {order.paymentType}</span>
+                          </div>
+                          <div className="text-sm text-gray-500">
+                            {order.items.map((orderItem, idx) => (
+                              <p key={idx}>
+                                {orderItem.product?.name?.slice(0, 15)}...
+                              </p>
+                            ))}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+
+                  {/* ── DESKTOP: Order Table ── */}
+                  <div className="hidden md:block">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Order ID</TableHead>
+                          <TableHead>Amount</TableHead>
+                          <TableHead>Items</TableHead>
+                          <TableHead>Payment</TableHead>
+                          <TableHead>Status</TableHead>
                         </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
+                      </TableHeader>
+                      <TableBody>
+                        {customerOrders?.map((order) => (
+                          <TableRow key={order.id}>
+                            <TableCell className="font-medium">
+                              {order.id}
+                            </TableCell>
+                            <TableCell>{order.totalAmount}</TableCell>
+                            <TableCell>
+                              {order.items.map((orderItem, idx) => (
+                                <p key={idx}>
+                                  {orderItem.product?.name?.slice(0, 15)}...
+                                </p>
+                              ))}
+                            </TableCell>
+                            <TableCell>{order.paymentType}</TableCell>
+                            <TableCell>
+                              <Badge
+                                className={getStatusColor(order.status)}
+                                variant="secondary"
+                              >
+                                {order.status}
+                              </Badge>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+
                 </CardContent>
               </Card>
-
-           
             </div>
+
             <DialogFooter>
-              <Button onClick={() => setIsCustomerDetailsOpen(false)}>
+              <Button
+                onClick={() => setIsCustomerDetailsOpen(false)}
+                className="w-full sm:w-auto"
+              >
                 Close
               </Button>
             </DialogFooter>

@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import { Button } from "@/components/ui/button";
-
-import { RefreshCw, ArrowUpDown } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import {
   getOrdersByBranch,
   getOrderById,
 } from "@/Redux Toolkit/features/order/orderThunks";
 import { findBranchEmployees } from "@/Redux Toolkit/features/employee/employeeThunks";
 import { getPaymentIcon } from "../../../utils/getPaymentIcon";
-
 import { getStatusColor } from "../../../utils/getStatusColor";
 import OrdersFilters from "./OrdersFilters";
 import OrdersTable from "./OrdersTable";
@@ -19,27 +16,18 @@ import OrderDetailsDialog from "./OrderDetailsDialog";
 const Orders = () => {
   const dispatch = useDispatch();
   const branchId = useSelector((state) => state.branch.branch?.id);
-  const { orders, loading } = useSelector((state) => state.order);
-  const { selectedOrder } = useSelector((state) => state.order);
-
-
+  const { orders, loading, selectedOrder } = useSelector((state) => state.order);
   const [showDetails, setShowDetails] = useState(false);
 
-  // Fetch branch employees (cashiers)
   useEffect(() => {
     if (branchId) {
       dispatch(findBranchEmployees({ branchId, role: "ROLE_BRANCH_CASHIER" }));
     }
   }, [branchId, dispatch]);
 
-  // Fetch orders when filters change
   useEffect(() => {
     if (branchId) {
-      const data = {
-        branchId,
-      };
-      console.log("filters data ", data);
-      dispatch(getOrdersByBranch(data));
+      dispatch(getOrdersByBranch({ branchId }));
     }
   }, [branchId, dispatch]);
 
@@ -49,27 +37,24 @@ const Orders = () => {
   };
 
   const handlePrintInvoice = (orderId) => {
-    // In a real app, this would trigger invoice printing
     console.log(`Print invoice for order ${orderId}`);
   };
 
   const handleRefresh = () => {
     if (branchId) {
-      const data = {
-        branchId,
-      };
-      console.log("filter data ", data);
-      dispatch(getOrdersByBranch(data));
+      dispatch(getOrdersByBranch({ branchId }));
     }
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold tracking-tight">Orders</h1>
+    <div className="space-y-6 p-4 sm:p-6">
+
+      {/* Header */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Orders</h1>
         <Button
           variant="outline"
-          className="gap-2"
+          className="gap-2 w-full sm:w-auto"
           onClick={handleRefresh}
           disabled={loading}
         >
@@ -78,7 +63,7 @@ const Orders = () => {
         </Button>
       </div>
 
-      {/* Search and Filters */}
+      {/* Filters */}
       <OrdersFilters />
 
       {/* Orders Table */}

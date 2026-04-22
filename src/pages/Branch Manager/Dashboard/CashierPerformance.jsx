@@ -17,7 +17,6 @@ const CashierPerformance = () => {
     }
   }, [branchId, dispatch]);
 
-  // Map API data to recharts format
   const data = topCashiers?.map((item) => ({
     name: item.cashierName,
     sales: item.totalRevenue,
@@ -41,19 +40,29 @@ const CashierPerformance = () => {
       </CardHeader>
       <CardContent>
         <ChartContainer config={config}>
-          <ResponsiveContainer width="100%" height={256}>
+          <ResponsiveContainer width="100%" height={220}>
             <BarChart
               layout="vertical"
               data={data}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 40,
-                bottom: 5,
-              }}
+              margin={{ top: 5, right: 20, left: 30, bottom: 5 }}
             >
-              <XAxis type="number" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `₹${value}`} />
-              <YAxis dataKey="name" type="category" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
+              <XAxis
+                type="number"
+                stroke="#888888"
+                fontSize={11}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={(value) => `₹${value}`}
+              />
+              <YAxis
+                dataKey="name"
+                type="category"
+                stroke="#888888"
+                fontSize={11}
+                tickLine={false}
+                axisLine={false}
+                width={60}
+              />
               <ChartTooltip
                 content={({ active, payload }) => (
                   <ChartTooltipContent
