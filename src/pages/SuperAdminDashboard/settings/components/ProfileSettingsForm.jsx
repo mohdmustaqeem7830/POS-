@@ -47,7 +47,6 @@ const ProfileSettingsForm = ({
             value={profileData.email}
             // onChange={(e) => onFieldChange("email", e.target.value)}
             disabled={false}
-            
           />
           <ProfileInput
             id="phone"
@@ -59,14 +58,20 @@ const ProfileSettingsForm = ({
         </div>
         <Button
           onClick={onUpdate}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 w-full sm:w-auto"
           disabled={loading}
         >
-          {loading ? "Updating..." : <><Save className="w-4 h-4" /> Update Profile</>}
+          {loading ? (
+            "Updating..."
+          ) : (
+            <>
+              <Save className="w-4 h-4" /> Update Profile
+            </>
+          )}
         </Button>
       </CardContent>
     </Card>
   );
 };
 
-export default ProfileSettingsForm; 
+export default ProfileSettingsForm;

@@ -9,7 +9,12 @@ const PasswordInput = ({ id, label, value, onChange, show, onToggle }) => (
   <div className="space-y-2">
     <Label htmlFor={id}>{label}</Label>
     <div className="relative">
-      <Input id={id} type={show ? "text" : "password"} value={value} onChange={onChange} />
+      <Input
+        id={id}
+        type={show ? "text" : "password"}
+        value={value}
+        onChange={onChange}
+      />
       <Button
         type="button"
         variant="ghost"
@@ -63,7 +68,7 @@ const SecuritySettingsForm = ({
           show={showPasswords.confirm}
           onToggle={() => onShowPasswordToggle("confirm")}
         />
-        <Button onClick={onUpdate} className="flex items-center gap-2">
+        <Button onClick={onUpdate} className="flex items-center gap-2 w-full sm:w-auto">
           <Key className="w-4 h-4" />
           Change Password
         </Button>
@@ -72,4 +77,4 @@ const SecuritySettingsForm = ({
   );
 };
 
-export default SecuritySettingsForm; 
+export default SecuritySettingsForm;
