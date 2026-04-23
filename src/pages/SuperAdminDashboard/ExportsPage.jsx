@@ -3,11 +3,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/ca
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../components/ui/select";
 import { Badge } from "../../components/ui/badge";
 import { Download, FileText, Calendar, Filter, CheckCircle } from "lucide-react";
 import { useToast } from "../../components/ui/use-toast";
-// import { useToast } from "../../hooks/use-toast";
 
 const exportTypes = [
   {
@@ -84,10 +89,10 @@ export default function ExportsPage() {
     }
 
     setIsExporting(true);
-    
+
     // Simulate export process
     setTimeout(() => {
-      const exportType = exportTypes.find(type => type.id === selectedType);
+      const exportType = exportTypes.find((type) => type.id === selectedType);
       toast({
         title: "Export Started",
         description: `${exportType.name} export has been initiated. You'll receive a notification when it's ready.`,
@@ -108,13 +113,13 @@ export default function ExportsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-3xl font-bold tracking-tight">Exports</h2>
+        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Exports</h2>
         <p className="text-muted-foreground">
           Export store data and generate reports
         </p>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
         {/* Export Configuration */}
         <Card>
           <CardHeader>
@@ -148,14 +153,16 @@ export default function ExportsPage() {
               </Select>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="date-from">From Date</Label>
                 <Input
                   id="date-from"
                   type="date"
                   value={dateRange.from}
-                  onChange={(e) => setDateRange(prev => ({ ...prev, from: e.target.value }))}
+                  onChange={(e) =>
+                    setDateRange((prev) => ({ ...prev, from: e.target.value }))
+                  }
                 />
               </div>
               <div className="space-y-2">
@@ -164,13 +171,15 @@ export default function ExportsPage() {
                   id="date-to"
                   type="date"
                   value={dateRange.to}
-                  onChange={(e) => setDateRange(prev => ({ ...prev, to: e.target.value }))}
+                  onChange={(e) =>
+                    setDateRange((prev) => ({ ...prev, to: e.target.value }))
+                  }
                 />
               </div>
             </div>
 
-            <Button 
-              onClick={handleExport} 
+            <Button
+              onClick={handleExport}
               disabled={isExporting || !selectedType}
               className="w-full"
             >
@@ -201,11 +210,11 @@ export default function ExportsPage() {
                   key={type.id}
                   className="flex items-start gap-3 p-3 border rounded-lg hover:bg-muted/50"
                 >
-                  <div className="text-muted-foreground mt-1">
+                  <div className="text-muted-foreground mt-1 flex-shrink-0">
                     {type.icon}
                   </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <h4 className="font-medium">{type.name}</h4>
                       <Badge variant="outline" className="text-xs">
                         {type.format}
@@ -232,15 +241,15 @@ export default function ExportsPage() {
             {recentExports.map((exportItem) => (
               <div
                 key={exportItem.id}
-                className="flex items-center justify-between p-4 border rounded-lg"
+                className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 border rounded-lg"
               >
-                <div className="flex items-center gap-3">
-                  <div className="text-muted-foreground">
+                <div className="flex items-start gap-3">
+                  <div className="text-muted-foreground flex-shrink-0 mt-0.5">
                     <FileText className="w-5 h-5" />
                   </div>
                   <div>
                     <h4 className="font-medium">{exportItem.type}</h4>
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-sm text-muted-foreground mt-1">
                       <span className="flex items-center gap-1">
                         <Calendar className="w-3 h-3" />
                         {exportItem.date}
@@ -250,8 +259,8 @@ export default function ExportsPage() {
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Badge 
+                <div className="flex items-center gap-2 sm:flex-shrink-0">
+                  <Badge
                     variant={exportItem.status === "completed" ? "default" : "secondary"}
                     className="flex items-center gap-1"
                   >
@@ -280,4 +289,4 @@ export default function ExportsPage() {
       </Card>
     </div>
   );
-} 
+}

@@ -2,11 +2,14 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { Store, Clock, TrendingUp, AlertTriangle } from "lucide-react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+  PieChart, Pie, Cell,
+} from "recharts";
 import {
   getDashboardSummary,
   getStoreRegistrationStats,
-  getStoreStatusDistribution
+  getStoreStatusDistribution,
 } from "../../Redux Toolkit/features/adminDashboard/adminDashboardThunks";
 
 const COLORS = ["#10b981", "#f59e0b", "#ef4444"];
@@ -14,9 +17,7 @@ const COLORS = ["#10b981", "#f59e0b", "#ef4444"];
 const StatCard = ({ title, value, icon, description, trend }) => (
   <Card>
     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-      <CardTitle className="text-sm font-medium text-muted-foreground">
-        {title}
-      </CardTitle>
+      <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
       {icon}
     </CardHeader>
     <CardContent>
@@ -35,13 +36,8 @@ const StatCard = ({ title, value, icon, description, trend }) => (
 
 export default function Dashboard() {
   const dispatch = useDispatch();
-  const {
-    dashboardSummary,
-    storeRegistrationStats,
-    storeStatusDistribution,
-    loading,
-    error
-  } = useSelector((state) => state.adminDashboard);
+  const { dashboardSummary, storeRegistrationStats, storeStatusDistribution, loading, error } =
+    useSelector((state) => state.adminDashboard);
 
   useEffect(() => {
     dispatch(getDashboardSummary());
@@ -49,10 +45,9 @@ export default function Dashboard() {
     dispatch(getStoreStatusDistribution());
   }, [dispatch]);
 
-  // Prepare data for charts
   const barData = storeRegistrationStats?.map((item) => ({
     date: item.date || item.day || item.label,
-    stores: item.count || item.value || 0
+    stores: item.count || item.value || 0,
   })) || [];
 
   const pieData = storeStatusDistribution
@@ -66,89 +61,48 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
-        <p className="text-muted-foreground">
-          Overview of all stores and system statistics
-        </p>
+        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Dashboard</h2>
+        <p className="text-muted-foreground">Overview of all stores and system statistics</p>
       </div>
 
       {loading && <div className="text-center py-8">Loading dashboard...</div>}
       {error && <div className="text-center py-8 text-red-500">{error}</div>}
 
       {/* Stat Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <StatCard
-          title="Total Stores"
-          value={dashboardSummary?.totalStores ?? "-"}
-          icon={<Store className="h-4 w-4 text-muted-foreground" />}
-          description="from last month"
-          trend={undefined}
-        />
-        <StatCard
-          title="Active Stores"
-          value={dashboardSummary?.activeStores ?? "-"}
-          icon={<TrendingUp className="h-4 w-4 text-muted-foreground" />}
-          description="currently operational"
-          trend={undefined}
-        />
-        <StatCard
-          title="Blocked Stores"
-          value={dashboardSummary?.blockedStores ?? "-"}
-          icon={<AlertTriangle className="h-4 w-4 text-muted-foreground" />}
-          description="suspended accounts"
-          trend={undefined}
-        />
-        <StatCard
-          title="Pending Requests"
-          value={dashboardSummary?.pendingStores ?? "-"}
-          icon={<Clock className="h-4 w-4 text-muted-foreground" />}
-          description="awaiting approval"
-          trend={undefined}
-        />
+      <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
+        <StatCard title="Total Stores" value={dashboardSummary?.totalStores ?? "-"} icon={<Store className="h-4 w-4 text-muted-foreground" />} description="from last month" />
+        <StatCard title="Active Stores" value={dashboardSummary?.activeStores ?? "-"} icon={<TrendingUp className="h-4 w-4 text-muted-foreground" />} description="currently operational" />
+        <StatCard title="Blocked Stores" value={dashboardSummary?.blockedStores ?? "-"} icon={<AlertTriangle className="h-4 w-4 text-muted-foreground" />} description="suspended accounts" />
+        <StatCard title="Pending Requests" value={dashboardSummary?.pendingStores ?? "-"} icon={<Clock className="h-4 w-4 text-muted-foreground" />} description="awaiting approval" />
       </div>
 
       {/* Charts */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-        <Card className="col-span-4">
+      <div className="grid gap-4 grid-cols-1 lg:grid-cols-7">
+        {/* Bar Chart */}
+        <Card className="lg:col-span-4">
           <CardHeader>
-            <CardTitle>Store Registrations (Last 7 Days)</CardTitle>
+            <CardTitle className="text-base sm:text-lg">Store Registrations (Last 7 Days)</CardTitle>
           </CardHeader>
           <CardContent className="pl-2">
-            <ResponsiveContainer width="100%" height={350}>
+            <ResponsiveContainer width="100%" height={250}>
               <BarChart data={barData}>
-                <XAxis
-                  dataKey="date"
-                  stroke="#888888"
-                  fontSize={12}
-                  tickLine={false}
-                  axisLine={false}
-                />
-                <YAxis
-                  stroke="#888888"
-                  fontSize={12}
-                  tickLine={false}
-                  axisLine={false}
-                  tickFormatter={(value) => `${value}`}
-                />
+                <XAxis dataKey="date" stroke="#888888" fontSize={11} tickLine={false} axisLine={false} />
+                <YAxis stroke="#888888" fontSize={11} tickLine={false} axisLine={false} />
                 <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
                 <Tooltip />
-                <Bar
-                  dataKey="stores"
-                  fill="currentColor"
-                  radius={[4, 4, 0, 0]}
-                  className="fill-primary"
-                />
+                <Bar dataKey="stores" fill="currentColor" radius={[4, 4, 0, 0]} className="fill-primary" />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
 
-        <Card className="col-span-3">
+        {/* Pie Chart */}
+        <Card className="lg:col-span-3">
           <CardHeader>
-            <CardTitle>Store Status Distribution</CardTitle>
+            <CardTitle className="text-base sm:text-lg">Store Status Distribution</CardTitle>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={350}>
+            <ResponsiveContainer width="100%" height={250}>
               <PieChart>
                 <Pie
                   data={pieData}
@@ -156,8 +110,7 @@ export default function Dashboard() {
                   cy="50%"
                   labelLine={false}
                   label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={80}
-                  fill="#8884d8"
+                  outerRadius={75}
                   dataKey="value"
                 >
                   {pieData.map((entry, index) => (
@@ -171,37 +124,29 @@ export default function Dashboard() {
         </Card>
       </div>
 
-      {/* Recent Activity - still mock for now */}
+      {/* Recent Activity */}
       <Card>
         <CardHeader>
           <CardTitle>Recent Activity</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            <div className="flex items-center gap-4 p-4 border rounded-lg">
-              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-              <div className="flex-1">
-                <p className="text-sm font-medium">New store "Zosh Mart" registered</p>
-                <p className="text-xs text-muted-foreground">2 minutes ago</p>
+          <div className="space-y-3">
+            {[
+              { color: "bg-green-500", text: 'New store "Zosh Mart" registered', time: "2 minutes ago" },
+              { color: "bg-yellow-500", text: 'Store "ABC Supermarket" pending approval', time: "15 minutes ago" },
+              { color: "bg-red-500", text: 'Store "XYZ Store" blocked for policy violation', time: "1 hour ago" },
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 border rounded-lg">
+                <div className={`w-2 h-2 mt-1.5 rounded-full flex-shrink-0 ${item.color}`} />
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium leading-snug">{item.text}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">{item.time}</p>
+                </div>
               </div>
-            </div>
-            <div className="flex items-center gap-4 p-4 border rounded-lg">
-              <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-              <div className="flex-1">
-                <p className="text-sm font-medium">Store "ABC Supermarket" pending approval</p>
-                <p className="text-xs text-muted-foreground">15 minutes ago</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4 p-4 border rounded-lg">
-              <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-              <div className="flex-1">
-                <p className="text-sm font-medium">Store "XYZ Store" blocked for policy violation</p>
-                <p className="text-xs text-muted-foreground">1 hour ago</p>
-              </div>
-            </div>
+            ))}
           </div>
         </CardContent>
       </Card>
     </div>
   );
-} 
+}
