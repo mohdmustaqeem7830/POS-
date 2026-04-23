@@ -10,52 +10,48 @@ import { Button } from "../../../components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui/card";
 import { Badge } from "../../../components/ui/badge";
 import { Separator } from "../../../components/ui/separator";
-import { 
-  Store, 
-  User, 
-  Phone, 
-  Mail, 
-  Calendar, 
-  FileText, 
+import {
+  Store,
+  User,
+  Phone,
+  Mail,
+  Calendar,
+  FileText,
   MapPin,
   Building,
-  X,
-  Edit,
   Ban,
-  CheckCircle
+  CheckCircle,
+  Edit,
 } from "lucide-react";
 import StoreStatusBadge from "./StoreStatusBadge";
 import { formatDateTime } from "../../../utils/formateDate";
 
-export default function StoreDetailDrawer({ 
-  store, 
-  open, 
-  onOpenChange, 
-  onBlockStore, 
+export default function StoreDetailDrawer({
+  store,
+  open,
+  onOpenChange,
+  onBlockStore,
   onActivateStore,
-  onEditStore 
+  onEditStore,
 }) {
   if (!store) return null;
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-[400px] sm:w-[540px] overflow-y-auto">
+      {/* Full width on mobile, fixed width on desktop */}
+      <SheetContent className="w-full sm:w-[400px] md:w-[540px] overflow-y-auto">
         <SheetHeader>
-          
-            <div>
-              <SheetTitle className="text-xl font-bold">{store.brand}</SheetTitle>
-              <SheetDescription>
-                Store ID: {store.id}
-              </SheetDescription>
-            </div>
-           
+          <div>
+            <SheetTitle className="text-lg sm:text-xl font-bold">{store.brand}</SheetTitle>
+            <SheetDescription>Store ID: {store.id}</SheetDescription>
+          </div>
         </SheetHeader>
 
         <div className="mt-6 space-y-6">
-          {/* Status Section */}
-          <div className="flex items-center justify-between">
+          {/* Status + Actions */}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <StoreStatusBadge status={store.status} />
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               {store.status === "active" && (
                 <Button
                   variant="outline"
@@ -94,23 +90,23 @@ export default function StoreDetailDrawer({
           {/* Owner Information */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
+              <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
                 <User className="w-5 h-5" />
                 Owner Information
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="flex items-center gap-3">
-                <User className="w-4 h-4 text-muted-foreground" />
-                <span className="font-medium">{store.storeAdmin?.fullName}</span>
+                <User className="w-4 h-4 text-muted-foreground shrink-0" />
+                <span className="font-medium text-sm sm:text-base">{store.storeAdmin?.fullName}</span>
               </div>
               <div className="flex items-center gap-3">
-                <Phone className="w-4 h-4 text-muted-foreground" />
-                <span>{store.contact?.phone}</span>
+                <Phone className="w-4 h-4 text-muted-foreground shrink-0" />
+                <span className="text-sm sm:text-base">{store.contact?.phone}</span>
               </div>
               <div className="flex items-center gap-3">
-                <Mail className="w-4 h-4 text-muted-foreground" />
-                <span>{store.contact?.email}</span>
+                <Mail className="w-4 h-4 text-muted-foreground shrink-0" />
+                <span className="text-sm sm:text-base break-all">{store.contact?.email}</span>
               </div>
             </CardContent>
           </Card>
@@ -118,23 +114,23 @@ export default function StoreDetailDrawer({
           {/* Store Information */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
+              <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
                 <Store className="w-5 h-5" />
                 Store Information
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="flex items-center gap-3">
-                <Building className="w-4 h-4 text-muted-foreground" />
-                <span className="font-medium">{store.brand}</span>
+                <Building className="w-4 h-4 text-muted-foreground shrink-0" />
+                <span className="font-medium text-sm sm:text-base">{store.brand}</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <MapPin className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
+                <span className="text-sm sm:text-base">{store.address || "Address not provided"}</span>
               </div>
               <div className="flex items-center gap-3">
-                <MapPin className="w-4 h-4 text-muted-foreground" />
-                <span>{store.address || "Address not provided"}</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <Calendar className="w-4 h-4 text-muted-foreground" />
-                <span>Registered on {formatDateTime(store.createdAt)}</span>
+                <Calendar className="w-4 h-4 text-muted-foreground shrink-0" />
+                <span className="text-sm sm:text-base">Registered on {formatDateTime(store.createdAt)}</span>
               </div>
             </CardContent>
           </Card>
@@ -142,27 +138,30 @@ export default function StoreDetailDrawer({
           {/* Business Documents */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
+              <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
                 <FileText className="w-5 h-5" />
                 Business Documents
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium text-muted-foreground">GST Number</label>
+                  <label className="text-xs sm:text-sm font-medium text-muted-foreground">
+                    GST Number
+                  </label>
                   <p className="text-sm">{store.gstNumber || "Not provided"}</p>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-muted-foreground">PAN Number</label>
+                  <label className="text-xs sm:text-sm font-medium text-muted-foreground">
+                    PAN Number
+                  </label>
                   <p className="text-sm">{store.panNumber || "Not provided"}</p>
                 </div>
               </div>
-              
-              {/* Document Previews */}
+
               {store.documents && store.documents.length > 0 && (
                 <div>
-                  <label className="text-sm font-medium text-muted-foreground mb-2 block">
+                  <label className="text-xs sm:text-sm font-medium text-muted-foreground mb-2 block">
                     Uploaded Documents
                   </label>
                   <div className="grid grid-cols-2 gap-2">
@@ -172,7 +171,7 @@ export default function StoreDetailDrawer({
                         className="border rounded-lg p-2 text-center cursor-pointer hover:bg-muted/50"
                       >
                         <FileText className="w-8 h-8 mx-auto mb-1 text-muted-foreground" />
-                        <p className="text-xs">{doc.name}</p>
+                        <p className="text-xs truncate">{doc.name}</p>
                       </div>
                     ))}
                   </div>
@@ -185,12 +184,10 @@ export default function StoreDetailDrawer({
           {store.additionalInfo && (
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">Additional Information</CardTitle>
+                <CardTitle className="text-base sm:text-lg">Additional Information</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  {store.additionalInfo}
-                </p>
+                <p className="text-sm text-muted-foreground">{store.additionalInfo}</p>
               </CardContent>
             </Card>
           )}
@@ -198,4 +195,4 @@ export default function StoreDetailDrawer({
       </SheetContent>
     </Sheet>
   );
-} 
+}

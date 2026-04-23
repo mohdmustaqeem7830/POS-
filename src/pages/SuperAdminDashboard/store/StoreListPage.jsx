@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus, Download, Filter } from "lucide-react";
 import StoreTable from "./StoreTable";
 import StoreDetailDrawer from "./StoreDetailDrawer";
 import { useToast } from "@/components/ui/use-toast";
-// import { useToast } from "../../hooks/use-toast";
 
 export default function StoreListPage() {
   const [selectedStore, setSelectedStore] = useState(null);
@@ -39,23 +37,20 @@ export default function StoreListPage() {
     });
   };
 
-
-
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight">Stores</h2>
-          <p className="text-muted-foreground">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Stores</h2>
+          <p className="text-muted-foreground text-sm sm:text-base">
             Manage all registered stores and their status
           </p>
         </div>
-       
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>All Stores</CardTitle>
+          <CardTitle className="text-base sm:text-lg">All Stores</CardTitle>
         </CardHeader>
         <CardContent>
           <StoreTable
@@ -76,4 +71,4 @@ export default function StoreListPage() {
       />
     </div>
   );
-} 
+}
