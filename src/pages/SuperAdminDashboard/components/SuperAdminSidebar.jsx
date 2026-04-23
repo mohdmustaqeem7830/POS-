@@ -5,11 +5,10 @@ import { logout } from "../../../Redux Toolkit/features/user/userThunks";
 import {
   LayoutDashboard,
   Store,
-  Download,
   Settings,
   FileText,
-  DollarSign,
   Clock,
+  X,
 } from "lucide-react";
 import { Button } from "../../../components/ui/button";
 
@@ -34,8 +33,6 @@ const navLinks = [
     path: "/super-admin/requests",
     icon: <Clock className="w-5 h-5" />,
   },
- 
-
   {
     name: "Settings",
     path: "/super-admin/settings",
@@ -43,7 +40,7 @@ const navLinks = [
   },
 ];
 
-export default function SuperAdminSidebar() {
+export default function SuperAdminSidebar({ onClose }) {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -55,16 +52,29 @@ export default function SuperAdminSidebar() {
 
   return (
     <aside className="h-screen w-64 bg-sidebar border-r border-sidebar-border flex flex-col py-6 px-4 shadow-lg">
-      <div className="mb-8 text-2xl font-extrabold text-primary tracking-tight flex items-center gap-2">
-        <Store className="w-7 h-7 text-primary" />
-        Super Admin
+      {/* Header with close button on mobile */}
+      <div className="mb-8 flex items-center justify-between">
+        <div className="text-2xl font-extrabold text-primary tracking-tight flex items-center gap-2">
+          <Store className="w-7 h-7 text-primary" />
+          Super Admin
+        </div>
+        {/* Close button — only visible on mobile */}
+        <button
+          onClick={onClose}
+          className="lg:hidden p-1 rounded-md text-sidebar-foreground hover:bg-sidebar-accent transition-colors"
+          aria-label="Close sidebar"
+        >
+          <X className="w-5 h-5" />
+        </button>
       </div>
+
       <nav className="flex-1 overflow-y-auto">
         <ul className="space-y-2">
           {navLinks.map((link) => (
             <li key={link.name}>
               <Link
                 to={link.path}
+                onClick={onClose} // Close sidebar on nav click (mobile)
                 className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors text-base font-medium group ${
                   location.pathname.startsWith(link.path)
                     ? "bg-sidebar-accent text-sidebar-accent-foreground shadow"
@@ -86,11 +96,12 @@ export default function SuperAdminSidebar() {
           ))}
         </ul>
       </nav>
+
       <div className="mt-auto">
         <Button
           onClick={handleLogout}
           variant=""
-          className="flex items-center gap-3 rounded-lg transition-colors text-base font-medium w-full text-left "
+          className="flex items-center gap-3 rounded-lg transition-colors text-base font-medium w-full text-left"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -113,4 +124,4 @@ export default function SuperAdminSidebar() {
       </div>
     </aside>
   );
-} 
+}
