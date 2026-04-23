@@ -1,6 +1,5 @@
 // External dependencies
 import React, { useState, memo } from 'react';
-
 import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -77,7 +76,7 @@ const initialValues = {
  * Renders the feature switches grid.
  */
 const FeaturesSwitchGrid = memo(({ handleFeatureSwitch }) => (
-  <div className="grid grid-cols-2 gap-2">
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
     {FEATURE_FIELDS.map(f => (
       <label key={f.key} className="flex items-center gap-2">
         <Field name={f.key} type="checkbox">
@@ -140,7 +139,6 @@ const AddPlanDialog = ({ open, onOpenChange, onSuccess }) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
-  // --- Handlers ---
   const handleSubmit = async (values, { setSubmitting, resetForm, setErrors }) => {
     setLoading(true);
     try {
@@ -158,7 +156,6 @@ const AddPlanDialog = ({ open, onOpenChange, onSuccess }) => {
     }
   };
 
-  // These handlers are created inside Formik's render function to access setFieldValue and values
   const renderForm = ({ values, isSubmitting, errors, setFieldValue }) => {
     // Handler for feature switch
     const handleFeatureSwitch = (key, val) => {
@@ -188,14 +185,16 @@ const AddPlanDialog = ({ open, onOpenChange, onSuccess }) => {
           <Field as={Input} id="plan-name" name="name" placeholder="Plan name" />
           <ErrorMessage name="name" component="div" className="text-red-500 text-xs" />
         </div>
+
         {/* Description */}
         <div>
           <label className="block font-medium" htmlFor="plan-description">Description</label>
           <Field as={Input} id="plan-description" name="description" placeholder="Description" />
           <ErrorMessage name="description" component="div" className="text-red-500 text-xs" />
         </div>
+
         {/* Price & Billing Cycle */}
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1">
             <label className="block font-medium" htmlFor="plan-price">Price (₹)</label>
             <Field as={Input} id="plan-price" name="price" type="number" min="0" placeholder="Price" />
@@ -220,8 +219,9 @@ const AddPlanDialog = ({ open, onOpenChange, onSuccess }) => {
             <ErrorMessage name="billingCycle" component="div" className="text-red-500 text-xs" />
           </div>
         </div>
+
         {/* Branches, Users, Products */}
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1">
             <label className="block font-medium" htmlFor="plan-branches">Branches</label>
             <Field as={Input} id="plan-branches" name="maxBranches" type="number" min="1" placeholder="Branches" />
@@ -238,6 +238,7 @@ const AddPlanDialog = ({ open, onOpenChange, onSuccess }) => {
             <ErrorMessage name="maxProducts" component="div" className="text-red-500 text-xs" />
           </div>
         </div>
+
         {/* Features Switches */}
         <div>
           <label className="block font-medium mb-2">Features</label>
@@ -246,6 +247,7 @@ const AddPlanDialog = ({ open, onOpenChange, onSuccess }) => {
             <ErrorMessage key={f.key} name={f.key} component="div" className="text-red-500 text-xs" />
           ))}
         </div>
+
         {/* Extra Features */}
         <div>
           <label className="block font-medium mb-1">Extra Features</label>
@@ -257,15 +259,17 @@ const AddPlanDialog = ({ open, onOpenChange, onSuccess }) => {
           />
           <ErrorMessage name="extraFeatures" component="div" className="text-red-500 text-xs" />
         </div>
+
         {/* Submission error */}
         {errors.submit && <div className="text-red-500 text-xs">{errors.submit}</div>}
+
         {/* Dialog Footer */}
-        <DialogFooter>
-          <Button type="submit" disabled={isSubmitting || loading}>
+        <DialogFooter className="flex-col-reverse sm:flex-row gap-2">
+          <Button type="submit" disabled={isSubmitting || loading} className="w-full sm:w-auto">
             {loading ? 'Saving...' : 'Save Plan'}
           </Button>
           <DialogClose asChild>
-            <Button type="button" variant="ghost">Cancel</Button>
+            <Button type="button" variant="ghost" className="w-full sm:w-auto">Cancel</Button>
           </DialogClose>
         </DialogFooter>
       </Form>
@@ -274,7 +278,7 @@ const AddPlanDialog = ({ open, onOpenChange, onSuccess }) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="w-[95vw] max-w-lg mx-auto">
         <DialogHeader>
           <DialogTitle>Add Subscription Plan</DialogTitle>
         </DialogHeader>
@@ -292,5 +296,4 @@ const AddPlanDialog = ({ open, onOpenChange, onSuccess }) => {
   );
 };
 
-
-export default AddPlanDialog; 
+export default AddPlanDialog;

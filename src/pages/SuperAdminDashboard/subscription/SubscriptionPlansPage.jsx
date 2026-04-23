@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { Button } from '@/src/components/ui/button';
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
@@ -10,7 +9,7 @@ import {
   deleteSubscriptionPlan,
 } from "@/Redux Toolkit/features/subscriptionPlan/subscriptionPlanThunks";
 
-import { toast} from "../../../components/ui/use-toast";
+import { toast } from "../../../components/ui/use-toast";
 import { Button } from "../../../components/ui/button";
 import {
   Table,
@@ -22,7 +21,7 @@ import {
 } from "../../../components/ui/table";
 import AddPlanDialog from "./AddPlanDialog";
 import { Switch } from "../../../components/ui/switch";
-import { updateSubscriptionPlan } from '@/Redux Toolkit/features/subscriptionPlan/subscriptionPlanThunks';
+import { updateSubscriptionPlan } from "@/Redux Toolkit/features/subscriptionPlan/subscriptionPlanThunks";
 import EditPlanDialog from "./EditPlanDialog";
 
 const BILLING_CYCLES = [
@@ -63,14 +62,10 @@ const columns = [
 
 const SubscriptionPlansPage = () => {
   const dispatch = useDispatch();
-  
-  const { plans, error } = useSelector(
-    (state) => state.subscriptionPlan
-  );
+
+  const { plans, error } = useSelector((state) => state.subscriptionPlan);
 
   const [search, setSearch] = useState("");
-  
-
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const [statusLoadingId, setStatusLoadingId] = useState(null);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
@@ -87,7 +82,6 @@ const SubscriptionPlansPage = () => {
         plan.name.toLowerCase().includes(search.toLowerCase())
       );
     }
-
     return filtered;
   }, [plans, search]);
 
@@ -115,21 +109,30 @@ const SubscriptionPlansPage = () => {
   const handleStatusToggle = async (plan) => {
     setStatusLoadingId(plan.id);
     const updated = { ...plan, active: !plan.active };
-    // Remove fields not needed for update (like Redux entity fields)
     delete updated.createdAt;
     delete updated.updatedAt;
-    const res = await dispatch(updateSubscriptionPlan({ id: plan.id, plan: updated }));
+    const res = await dispatch(
+      updateSubscriptionPlan({ id: plan.id, plan: updated })
+    );
     setStatusLoadingId(null);
-    if (res.meta.requestStatus === 'fulfilled') {
-      toast({ title: 'Status Updated', description: `Plan is now ${updated.active ? 'Active' : 'Inactive'}`, variant: 'success' });
+    if (res.meta.requestStatus === "fulfilled") {
+      toast({
+        title: "Status Updated",
+        description: `Plan is now ${updated.active ? "Active" : "Inactive"}`,
+        variant: "success",
+      });
       dispatch(getAllSubscriptionPlans());
     } else {
-      toast({ title: 'Error', description: res.payload || 'Failed to update status', variant: 'destructive' });
+      toast({
+        title: "Error",
+        description: res.payload || "Failed to update status",
+        variant: "destructive",
+      });
     }
   };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="p-4 sm:p-6 max-w-7xl mx-auto">
       <AddPlanDialog
         open={addDialogOpen}
         onOpenChange={setAddDialogOpen}
@@ -145,23 +148,30 @@ const SubscriptionPlansPage = () => {
           dispatch(getAllSubscriptionPlans());
         }}
       />
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Subscription Plans</h1>
-        <Button onClick={() => setAddDialogOpen(true)}>
+
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+        <h1 className="text-xl sm:text-2xl font-bold">Subscription Plans</h1>
+        <Button onClick={() => setAddDialogOpen(true)} className="w-full sm:w-auto">
           ➕ Add New Plan
         </Button>
       </div>
+
+      {/* Search */}
       <div className="flex flex-wrap gap-4 mb-4 items-center">
         <Input
           placeholder="Search plans..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-64"
+          className="w-full sm:w-64"
         />
-       
-      
       </div>
-      <div className="overflow-x-auto bg-white rounded shadow" style={{ maxHeight: 500, overflowY: 'auto' }}>
+
+      {/* Desktop Table — hidden on mobile */}
+      <div
+        className="hidden md:block overflow-x-auto bg-white rounded shadow"
+        style={{ maxHeight: 500, overflowY: "auto" }}
+      >
         <Table className="min-w-full text-sm">
           <TableHeader>
             <TableRow className="bg-gray-100">
@@ -203,25 +213,28 @@ const SubscriptionPlansPage = () => {
                   {plan.maxProducts ?? "-"}
                 </TableCell>
                 <TableCell className="px-4 py-2">
-                  
                   <div className="flex items-center gap-2">
                     <Switch
                       checked={!!plan.active}
                       onCheckedChange={() => handleStatusToggle(plan)}
                       disabled={statusLoadingId === plan.id}
                     />
-                    <span className={plan.active ? 'text-green-600' : 'text-red-500'}>
-                      {plan.active ? 'Active' : 'Inactive'}
+                    <span
+                      className={
+                        plan.active ? "text-green-600" : "text-red-500"
+                      }
+                    >
+                      {plan.active ? "Active" : "Inactive"}
                     </span>
-                    {statusLoadingId === plan.id && <span className="text-xs text-gray-400">Updating...</span>}
+                    {statusLoadingId === plan.id && (
+                      <span className="text-xs text-gray-400">Updating...</span>
+                    )}
                   </div>
                 </TableCell>
-                <TableCell className="px-4 py-2  ">
-                
+                <TableCell className="px-4 py-2">
                   {getFeatureBadges(plan)}
                 </TableCell>
                 <TableCell className="px-4 py-2 flex gap-2">
-                  
                   <Tooltip content="Edit">
                     <Button
                       size="icon"
@@ -231,9 +244,7 @@ const SubscriptionPlansPage = () => {
                         setEditDialogOpen(true);
                       }}
                     >
-                      <span role="img" aria-label="edit">
-                        ✏️
-                      </span>
+                      <span role="img" aria-label="edit">✏️</span>
                     </Button>
                   </Tooltip>
                   <Tooltip content="Delete">
@@ -242,9 +253,7 @@ const SubscriptionPlansPage = () => {
                       variant="ghost"
                       onClick={() => handleDelete(plan.id)}
                     >
-                      <span role="img" aria-label="delete">
-                        🗑️
-                      </span>
+                      <span role="img" aria-label="delete">🗑️</span>
                     </Button>
                   </Tooltip>
                 </TableCell>
@@ -253,6 +262,95 @@ const SubscriptionPlansPage = () => {
           </TableBody>
         </Table>
       </div>
+
+      {/* Mobile Cards — shown only on mobile */}
+      <div className="md:hidden space-y-4">
+        {filteredPlans.length === 0 && (
+          <div className="text-center py-8 text-gray-400 bg-white rounded shadow">
+            No plans found.
+          </div>
+        )}
+        {filteredPlans.map((plan) => (
+          <div
+            key={plan.id}
+            className="bg-white rounded shadow p-4 space-y-3 border"
+          >
+            {/* Plan name + billing cycle */}
+            <div className="flex items-start justify-between gap-2">
+              <div>
+                <p className="font-semibold text-base">{plan.name}</p>
+                <p className="text-xs text-gray-500 mt-0.5">{plan.billingCycle}</p>
+              </div>
+              <p className="font-bold text-base">₹{plan.price}</p>
+            </div>
+
+            {/* Limits */}
+            <div className="grid grid-cols-3 gap-2 text-sm text-center">
+              <div className="bg-gray-50 rounded p-2">
+                <p className="text-xs text-gray-400">Branches</p>
+                <p className="font-medium">{plan.maxBranches ?? "-"}</p>
+              </div>
+              <div className="bg-gray-50 rounded p-2">
+                <p className="text-xs text-gray-400">Users</p>
+                <p className="font-medium">{plan.maxUsers ?? "-"}</p>
+              </div>
+              <div className="bg-gray-50 rounded p-2">
+                <p className="text-xs text-gray-400">Products</p>
+                <p className="font-medium">{plan.maxProducts ?? "-"}</p>
+              </div>
+            </div>
+
+            {/* Features */}
+            <div>
+              <p className="text-xs text-gray-400 mb-1">Features</p>
+              <div className="flex flex-wrap gap-1">
+                {getFeatureBadges(plan)}
+              </div>
+            </div>
+
+            {/* Status toggle */}
+            <div className="flex items-center gap-2">
+              <Switch
+                checked={!!plan.active}
+                onCheckedChange={() => handleStatusToggle(plan)}
+                disabled={statusLoadingId === plan.id}
+              />
+              <span className={plan.active ? "text-green-600 text-sm" : "text-red-500 text-sm"}>
+                {plan.active ? "Active" : "Inactive"}
+              </span>
+              {statusLoadingId === plan.id && (
+                <span className="text-xs text-gray-400">Updating...</span>
+              )}
+            </div>
+
+            {/* Actions */}
+            <div className="flex gap-2 pt-1">
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex-1"
+                onClick={() => {
+                  setSelectedPlan(plan);
+                  setEditDialogOpen(true);
+                }}
+              >
+                <span role="img" aria-label="edit" className="mr-1">✏️</span>
+                Edit
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex-1 text-red-500 border-red-200 hover:bg-red-50"
+                onClick={() => handleDelete(plan.id)}
+              >
+                <span role="img" aria-label="delete" className="mr-1">🗑️</span>
+                Delete
+              </Button>
+            </div>
+          </div>
+        ))}
+      </div>
+
       {error && <div className="text-red-500 mt-4">{error}</div>}
     </div>
   );
