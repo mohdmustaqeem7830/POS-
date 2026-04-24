@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Bell, User, Search, Menu } from "lucide-react";
 import { Button } from "../../../components/ui/button";
 import { Input } from "../../../components/ui/input";
-
+import { ThemeToggle } from "@/components/theme-toggle";
 export default function SuperAdminTopbar({ onMenuClick }) {
   const { userProfile } = useSelector((state) => state.user);
 
@@ -36,7 +36,7 @@ export default function SuperAdminTopbar({ onMenuClick }) {
               className="pl-10 w-64"
             />
           </div>
-
+             <ThemeToggle />
           {/* Notifications */}
           <Button variant="ghost" size="icon" className="relative">
             <Bell className="w-5 h-5" />
