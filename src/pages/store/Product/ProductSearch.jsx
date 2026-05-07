@@ -42,7 +42,7 @@ const ProductSearch = ({ onSearch }) => {
   return (
     <form
       onSubmit={handleSearch}
-      className="flex w-full max-w-sm items-center space-x-2"
+      className="flex w-full sm:max-w-sm items-center space-x-2"
     >
       <div className="relative flex-1">
         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
@@ -66,7 +66,7 @@ const ProductSearch = ({ onSearch }) => {
       <Button
         type="submit"
         disabled={!searchQuery.trim() || isSearching}
-        className="bg-emerald-600 hover:bg-emerald-700"
+        className="bg-emerald-600 hover:bg-emerald-700 shrink-0"
       >
         {isSearching ? "Searching..." : "Search"}
       </Button>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../Redux Toolkit/features/user/userThunks";
@@ -13,6 +13,8 @@ import {
   Tag,
   Truck,
   CreditCard,
+  Menu,
+  X,
 } from "lucide-react";
 import { Button } from "../../../components/ui/button";
 import { BadgeDollarSign } from "lucide-react";
@@ -58,7 +60,6 @@ const navLinks = [
     path: "/store/sales",
     icon: <BarChart2 className="w-5 h-5" />,
   },
-
   {
     name: "Reports",
     path: "/store/reports",
@@ -80,14 +81,15 @@ export default function StoreSidebar() {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleLogout = () => {
     dispatch(logout());
     navigate("/auth/login");
   };
 
-  return (
-    <aside className="h-screen w-64 bg-sidebar border-r border-sidebar-border flex flex-col py-6 px-4 shadow-lg">
+  const sidebarContent = (
+    <>
       <div className="mb-8 text-2xl font-extrabold text-primary tracking-tight flex items-center gap-2">
         <Store className="w-7 h-7 text-primary" />
         POS Admin
@@ -98,6 +100,7 @@ export default function StoreSidebar() {
             <li key={link.name}>
               <Link
                 to={link.path}
+                onClick={() => setMobileOpen(false)}
                 className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors text-base font-medium group ${
                   location.pathname.startsWith(link.path)
                     ? "bg-sidebar-accent text-sidebar-accent-foreground shadow"
@@ -128,6 +131,48 @@ export default function StoreSidebar() {
           Logout
         </Button>
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* Desktop Sidebar */}
+      <aside className="hidden md:flex h-screen w-64 bg-sidebar border-r border-sidebar-border flex-col py-6 px-4 shadow-lg">
+        {sidebarContent}
+      </aside>
+
+      {/* Mobile Hamburger Button */}
+      <button
+        className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-sidebar border border-sidebar-border shadow"
+        onClick={() => setMobileOpen(true)}
+        aria-label="Open menu"
+      >
+        <Menu className="w-5 h-5 text-primary" />
+      </button>
+
+      {/* Mobile Overlay */}
+      {mobileOpen && (
+        <div
+          className="md:hidden fixed inset-0 z-40 bg-black/50"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+
+      {/* Mobile Drawer */}
+      <aside
+        className={`md:hidden fixed top-0 left-0 z-50 h-full w-64 bg-sidebar border-r border-sidebar-border flex flex-col py-6 px-4 shadow-lg transform transition-transform duration-300 ${
+          mobileOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <button
+          className="absolute top-4 right-4 p-1 rounded"
+          onClick={() => setMobileOpen(false)}
+          aria-label="Close menu"
+        >
+          <X className="w-5 h-5 text-primary" />
+        </button>
+        {sidebarContent}
+      </aside>
+    </>
   );
 }

@@ -18,10 +18,10 @@ const RecentSales = () => {
           {recentSales.map((sale, index) => (
             <div key={index} className="flex items-center justify-between border-b pb-3 last:border-0 last:pb-0">
               <div>
-                <p className="font-medium">{sale.branch}</p>
+                <p className="font-medium text-sm sm:text-base">{sale.branch}</p>
                 <p className="text-sm text-gray-500">{sale.date}</p>
               </div>
-              <p className="font-semibold">{sale.amount}</p>
+              <p className="font-semibold text-sm sm:text-base">{sale.amount}</p>
             </div>
           ))}
         </div>

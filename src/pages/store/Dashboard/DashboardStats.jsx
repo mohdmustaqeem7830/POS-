@@ -29,7 +29,6 @@ const DashboardStats = () => {
     }
   };
 
-  // Format currency
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-IN', {
       style: 'currency',
@@ -39,7 +38,6 @@ const DashboardStats = () => {
     }).format(amount || 0);
   };
 
-  // Format percentage change
   const formatChange = (current, previous) => {
     if (!previous || previous === 0) return "+0%";
     const change = ((current - previous) / previous) * 100;
@@ -79,14 +77,14 @@ const DashboardStats = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
       {stats.map((stat, index) => (
         <Card key={index}>
-          <CardContent className="p-6">
+          <CardContent className="p-4 sm:p-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-500">{stat.title}</p>
-                <h3 className="text-2xl font-bold mt-1">
+                <h3 className="text-xl sm:text-2xl font-bold mt-1">
                   {stat.loading ? (
                     <div className="h-8 w-20 bg-gray-200 rounded animate-pulse"></div>
                   ) : (

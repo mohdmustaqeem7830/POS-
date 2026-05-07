@@ -9,21 +9,21 @@ const ProductDetails = ({ product }) => {
   return (
     <Card className="overflow-hidden">
       <CardHeader className="bg-gradient-to-r from-emerald-50 to-emerald-100 pb-4">
-        <CardTitle className="text-2xl font-bold">{product.name}</CardTitle>
+        <CardTitle className="text-xl sm:text-2xl font-bold">{product.name}</CardTitle>
         {product.brand && (
           <CardDescription className="text-sm font-medium text-emerald-700">
             {product.brand}
           </CardDescription>
         )}
       </CardHeader>
-      <CardContent className="p-6 space-y-6">
+      <CardContent className="p-4 sm:p-6 space-y-6">
         {/* Product Image */}
         {product.image && (
           <div className="mb-6 flex justify-center">
-            <div className="relative w-full max-w-md h-64 rounded-lg overflow-hidden border border-gray-200">
-              <img 
-                src={product.image} 
-                alt={product.name} 
+            <div className="relative w-full max-w-xs sm:max-w-md h-48 sm:h-64 rounded-lg overflow-hidden border border-gray-200">
+              <img
+                src={product.image}
+                alt={product.name}
                 className="w-full h-full object-cover"
                 onError={(e) => {
                   e.target.onerror = null;
@@ -38,7 +38,7 @@ const ProductDetails = ({ product }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <Barcode className="h-5 w-5 text-gray-500" />
+              <Barcode className="h-5 w-5 text-gray-500 shrink-0" />
               <div>
                 <div className="text-sm text-gray-500">SKU</div>
                 <div className="font-medium">{product.sku || 'N/A'}</div>
@@ -46,7 +46,7 @@ const ProductDetails = ({ product }) => {
             </div>
 
             <div className="flex items-center gap-2">
-              <Tag className="h-5 w-5 text-gray-500" />
+              <Tag className="h-5 w-5 text-gray-500 shrink-0" />
               <div>
                 <div className="text-sm text-gray-500">Category</div>
                 <div className="font-medium">{product.category || 'Uncategorized'}</div>
@@ -54,7 +54,7 @@ const ProductDetails = ({ product }) => {
             </div>
 
             <div className="flex items-center gap-2">
-              <Palette className="h-5 w-5 text-gray-500" />
+              <Palette className="h-5 w-5 text-gray-500 shrink-0" />
               <div>
                 <div className="text-sm text-gray-500">Color</div>
                 <div className="font-medium">{product.color || 'N/A'}</div>
@@ -64,7 +64,7 @@ const ProductDetails = ({ product }) => {
 
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <DollarSign className="h-5 w-5 text-gray-500" />
+              <DollarSign className="h-5 w-5 text-gray-500 shrink-0" />
               <div>
                 <div className="text-sm text-gray-500">Price</div>
                 <div className="font-medium">
@@ -81,7 +81,7 @@ const ProductDetails = ({ product }) => {
             </div>
 
             <div className="flex items-center gap-2">
-              <Package className="h-5 w-5 text-gray-500" />
+              <Package className="h-5 w-5 text-gray-500 shrink-0" />
               <div>
                 <div className="text-sm text-gray-500">Stock</div>
                 <div className="font-medium">
@@ -95,7 +95,7 @@ const ProductDetails = ({ product }) => {
             </div>
 
             <div className="flex items-center gap-2">
-              <Calendar className="h-5 w-5 text-gray-500" />
+              <Calendar className="h-5 w-5 text-gray-500 shrink-0" />
               <div>
                 <div className="text-sm text-gray-500">Last Updated</div>
                 <div className="font-medium">

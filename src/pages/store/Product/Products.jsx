@@ -32,14 +32,12 @@ export default function Products() {
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
-  // Fetch products on mount or when store changes
   useEffect(() => {
     if (store?.id) {
       fetchProducts();
     }
   }, [dispatch, store]);
 
-  // Update displayed products when products or search results change
   useEffect(() => {
     setDisplayedProducts(
       isSearchActive && searchResults.length > 0 ? searchResults : products
@@ -48,7 +46,6 @@ export default function Products() {
 
   const fetchProducts = async () => {
     try {
-      // const token = localStorage.getItem("jwt");
       await dispatch(getProductsByStore(store.id)).unwrap();
     } catch (err) {
       toast({
@@ -87,7 +84,6 @@ export default function Products() {
 
   const handleSearch = (results) => {
     if (results === null) {
-      // Search was cleared
       setIsSearchActive(false);
     } else {
       setIsSearchActive(true);
@@ -97,17 +93,17 @@ export default function Products() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold tracking-tight">
+      <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
           Product Management
         </h1>
         <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-emerald-600 hover:bg-emerald-700">
+            <Button className="bg-emerald-600 hover:bg-emerald-700 w-full sm:w-auto">
               <Plus className="mr-2 h-4 w-4" /> Add Product
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto p-10">
+          <DialogContent className="w-[95vw] max-w-[600px] max-h-[80vh] overflow-y-auto p-4 sm:p-10">
             <DialogHeader>
               <DialogTitle>Add New Product</DialogTitle>
             </DialogHeader>
@@ -126,7 +122,7 @@ export default function Products() {
           variant="outline"
           onClick={handleRefresh}
           disabled={refreshing}
-          className="ml-auto"
+          className="w-full sm:w-auto sm:ml-auto"
         >
           <RefreshCw
             className={`mr-2 h-4 w-4 ${refreshing ? "animate-spin" : ""}`}
@@ -136,7 +132,7 @@ export default function Products() {
       </div>
 
       {isSearchActive && (
-        <div className="bg-amber-50 border border-amber-200 text-amber-800 px-4 py-2 rounded-md flex justify-between items-center">
+        <div className="bg-amber-50 border border-amber-200 text-amber-800 px-4 py-2 rounded-md flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-center">
           <span>
             Showing search results ({displayedProducts.length}{" "}
             {displayedProducts.length === 1 ? "product" : "products"} found)
@@ -145,7 +141,7 @@ export default function Products() {
             variant="ghost"
             size="sm"
             onClick={() => setIsSearchActive(false)}
-            className="text-amber-800 hover:text-amber-900 hover:bg-amber-100"
+            className="text-amber-800 hover:text-amber-900 hover:bg-amber-100 w-full sm:w-auto"
           >
             Show all products
           </Button>
@@ -170,7 +166,7 @@ export default function Products() {
       </Card>
 
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
+        <DialogContent className="w-[95vw] max-w-[600px] max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Edit Product</DialogTitle>
           </DialogHeader>
@@ -184,7 +180,7 @@ export default function Products() {
       </Dialog>
 
       <Dialog open={isViewDialogOpen} onOpenChange={setIsViewDialogOpen}>
-        <DialogContent className="sm:max-w-[700px] max-h-[80vh] overflow-y-auto">
+        <DialogContent className="w-[95vw] max-w-[700px] max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Product Details</DialogTitle>
           </DialogHeader>

@@ -113,8 +113,8 @@ const ProductForm = ({
     const file = e.target.files[0];
     setUploadingImage(true);
     const image = await uploadToCloudinary(file);
-    setFieldValue("image",image);
-    setUploadingImage(false)
+    setFieldValue("image", image);
+    setUploadingImage(false);
   };
 
   return (
@@ -158,8 +158,8 @@ const ProductForm = ({
                   />
                   <Button
                     onClick={() => {
-                      setFieldValue("image", null)
-                      console.log("handle remove image")
+                      setFieldValue("image", null);
+                      console.log("handle remove image");
                     }}
                     className="absolute top-0 right-0"
                     size="icon"
@@ -232,7 +232,7 @@ const ProductForm = ({
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <label htmlFor="categoryId" className="block text-sm font-medium">
                 Category
@@ -286,7 +286,7 @@ const ProductForm = ({
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <label htmlFor="mrp" className="block text-sm font-medium">
                 MRP
@@ -349,19 +349,19 @@ const ProductForm = ({
             />
           </div>
 
-          <div className="flex justify-end gap-3 pt-4">
+          <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 pt-4">
             {onCancel && (
-              <Button type="button" variant="outline" onClick={onCancel}>
+              <Button type="button" variant="outline" onClick={onCancel} className="w-full sm:w-auto">
                 Cancel
               </Button>
             )}
             <Button
               type="submit"
-              className="bg-emerald-600 hover:bg-emerald-700"
+              className="bg-emerald-600 hover:bg-emerald-700 w-full sm:w-auto"
               disabled={isSubmitting || loading}
             >
               {isSubmitting || loading ? (
-                <span className="flex items-center">
+                <span className="flex items-center justify-center">
                   <svg
                     className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
                     xmlns="http://www.w3.org/2000/svg"

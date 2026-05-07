@@ -22,7 +22,7 @@ import { storeAdminRole } from "../../../utils/userRole";
 export default function StoreEmployees() {
   const dispatch = useDispatch();
   const { employees } = useSelector((state) => state.employee);
-  const {store}=useSelector(state=>state.store)
+  const { store } = useSelector((state) => state.store);
 
   useEffect(() => {
     if (store?.id) {
@@ -81,18 +81,23 @@ export default function StoreEmployees() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold tracking-tight">
+    <div className="space-y-4 sm:space-y-6">
+
+      {/* Header */}
+      <div className="flex items-center justify-between gap-3">
+        <h1 className="text-xl sm:text-3xl font-bold tracking-tight leading-tight">
           Employee Management
         </h1>
+
+        {/* Add Dialog */}
         <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-emerald-600 hover:bg-emerald-700">
-              <Plus className="mr-2 h-4 w-4" /> Add Employee
+            <Button className="bg-emerald-600 hover:bg-emerald-700 flex-shrink-0 h-9 sm:h-10 px-3 sm:px-4 text-sm">
+              <Plus className="h-4 w-4 sm:mr-2" />
+              <span className="hidden sm:inline">Add Employee</span>
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-h-[80vh] overflow-y-auto">
+          <DialogContent className="w-[calc(100%-2rem)] sm:max-w-lg max-h-[85vh] overflow-y-auto rounded-xl">
             <DialogHeader>
               <DialogTitle>Add New Employee</DialogTitle>
             </DialogHeader>
@@ -111,8 +116,9 @@ export default function StoreEmployees() {
           </DialogContent>
         </Dialog>
 
+        {/* Edit Dialog */}
         <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-          <DialogContent className="max-h-[80vh] overflow-y-auto">
+          <DialogContent className="w-[calc(100%-2rem)] sm:max-w-lg max-h-[85vh] overflow-y-auto rounded-xl">
             <DialogHeader>
               <DialogTitle>Edit Employee</DialogTitle>
             </DialogHeader>
@@ -121,10 +127,7 @@ export default function StoreEmployees() {
               roles={storeAdminRole}
               initialData={
                 currentEmployee
-                  ? {
-                      ...currentEmployee,
-                      branchId: currentEmployee.branchId || "",
-                    }
+                  ? { ...currentEmployee, branchId: currentEmployee.branchId || "" }
                   : null
               }
             />
@@ -132,6 +135,7 @@ export default function StoreEmployees() {
         </Dialog>
       </div>
 
+      {/* Table */}
       <EmployeeTable
         employees={employees}
         onEdit={openEditDialog}

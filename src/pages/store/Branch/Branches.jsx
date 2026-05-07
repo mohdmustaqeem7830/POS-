@@ -30,9 +30,6 @@ export default function Branches() {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [currentBranch, setCurrentBranch] = useState(null);
 
-
-
-  // Fetch branches when component mounts
   useEffect(() => {
     if (store?.id) {
       dispatch(
@@ -62,39 +59,40 @@ export default function Branches() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold tracking-tight">Branch Management</h1>
+      <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Branch Management</h1>
 
         {error && (
           <Alert variant="destructive" className="mb-4">
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
+
         <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-emerald-600 hover:bg-emerald-700">
+            <Button className="bg-emerald-600 hover:bg-emerald-700 w-full sm:w-auto">
               <Plus className="mr-2 h-4 w-4" /> Add Branch
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
+          <DialogContent className="w-[95vw] max-w-[600px] max-h-[80vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Add New Branch</DialogTitle>
             </DialogHeader>
-            <BranchForm 
-              onSubmit={handleAddBranchSuccess} 
+            <BranchForm
+              onSubmit={handleAddBranchSuccess}
               onCancel={() => setIsAddDialogOpen(false)}
             />
           </DialogContent>
         </Dialog>
 
         <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-          <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
+          <DialogContent className="w-[95vw] max-w-[600px] max-h-[80vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Edit Branch</DialogTitle>
             </DialogHeader>
-            <BranchForm 
-              initialValues={currentBranch} 
-              onSubmit={handleEditBranchSuccess} 
+            <BranchForm
+              initialValues={currentBranch}
+              onSubmit={handleEditBranchSuccess}
               onCancel={() => setIsEditDialogOpen(false)}
               isEditing={true}
             />
@@ -104,9 +102,9 @@ export default function Branches() {
 
       <Card>
         <CardContent className="p-0">
-          <BranchTable 
-            branches={branches} 
-            loading={loading} 
+          <BranchTable
+            branches={branches}
+            loading={loading}
             onEdit={openEditDialog}
           />
         </CardContent>

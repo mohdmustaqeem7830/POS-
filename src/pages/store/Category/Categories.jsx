@@ -3,9 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Plus } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { getCategoriesByStore } from "@/Redux Toolkit/features/category/categoryThunks";
-import { toast } from "@/components/ui/use-toast";
 import CategoryTable from "./CategoryTable";
 import CategoryForm from "./CategoryForm";
 
@@ -18,8 +23,6 @@ export default function Categories() {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [currentCategory, setCurrentCategory] = useState(null);
 
-
-  // Fetch categories on mount or when store changes
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (store?.id && token) {
@@ -27,9 +30,7 @@ export default function Categories() {
     }
   }, [dispatch, store]);
 
-  const handleAddCategorySuccess = () => {
-    setIsAddDialogOpen(false);
-  };
+  const handleAddCategorySuccess = () => setIsAddDialogOpen(false);
 
   const handleEditCategorySuccess = () => {
     setIsEditDialogOpen(false);
@@ -42,34 +43,42 @@ export default function Categories() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold tracking-tight">Category Management</h1>
+    <div className="space-y-4 sm:space-y-6">
+
+      {/* ── Header row ─────────────────────────────────────────────────────── */}
+      <div className="flex items-center justify-between gap-3">
+        <h1 className="text-xl sm:text-3xl font-bold tracking-tight leading-tight">
+          Category Management
+        </h1>
+
+        {/* Add Category Dialog */}
         <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-emerald-600 hover:bg-emerald-700">
-              <Plus className="mr-2 h-4 w-4" /> Add Category
+            <Button className="bg-emerald-600 hover:bg-emerald-700 flex-shrink-0 h-9 sm:h-10 px-3 sm:px-4 text-sm">
+              <Plus className="h-4 w-4 sm:mr-2" />
+              <span className="hidden sm:inline">Add Category</span>
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
+          <DialogContent className="w-[calc(100%-2rem)] sm:max-w-[600px] max-h-[85vh] overflow-y-auto rounded-xl">
             <DialogHeader>
               <DialogTitle>Add New Category</DialogTitle>
             </DialogHeader>
-            <CategoryForm 
-              onSubmit={handleAddCategorySuccess} 
+            <CategoryForm
+              onSubmit={handleAddCategorySuccess}
               onCancel={() => setIsAddDialogOpen(false)}
             />
           </DialogContent>
         </Dialog>
 
+        {/* Edit Category Dialog (no trigger — opened programmatically) */}
         <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-          <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
+          <DialogContent className="w-[calc(100%-2rem)] sm:max-w-[600px] max-h-[85vh] overflow-y-auto rounded-xl">
             <DialogHeader>
               <DialogTitle>Edit Category</DialogTitle>
             </DialogHeader>
-            <CategoryForm 
-              initialValues={currentCategory} 
-              onSubmit={handleEditCategorySuccess} 
+            <CategoryForm
+              initialValues={currentCategory}
+              onSubmit={handleEditCategorySuccess}
               onCancel={() => setIsEditDialogOpen(false)}
               isEditing={true}
             />
@@ -77,15 +86,17 @@ export default function Categories() {
         </Dialog>
       </div>
 
+      {/* ── Error banner ────────────────────────────────────────────────────── */}
       {error && (
-        <div className="mb-4 text-red-600">{error}</div>
+        <div className="text-red-600 text-sm px-1">{error}</div>
       )}
 
-      <Card>
+      {/* ── Table / Card ────────────────────────────────────────────────────── */}
+      <Card className="overflow-hidden">
         <CardContent className="p-0">
-          <CategoryTable 
-            categories={categories} 
-            loading={loading} 
+          <CategoryTable
+            categories={categories}
+            loading={loading}
             onEdit={openEditDialog}
           />
         </CardContent>

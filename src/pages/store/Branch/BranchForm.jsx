@@ -109,11 +109,11 @@ const BranchForm = ({ initialValues, onSubmit, onCancel, isEditing }) => {
             <ErrorMessage name="phone" component="div" className="text-red-500 text-sm" />
           </div>
 
-          <div className="flex justify-end gap-2 pt-4">
-            <Button type="button" variant="outline" onClick={onCancel}>
+          <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 pt-4">
+            <Button type="button" variant="outline" onClick={onCancel} className="w-full sm:w-auto">
               Cancel
             </Button>
-            <Button type="submit" disabled={isSubmitting || loading}>
+            <Button type="submit" disabled={isSubmitting || loading} className="w-full sm:w-auto">
               {isSubmitting || loading ? (isEditing ? "Updating..." : "Adding...") : (isEditing ? "Update Branch" : "Add Branch")}
             </Button>
           </div>

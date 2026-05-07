@@ -56,7 +56,6 @@ const SalesTrend = () => {
     }
   };
 
-  // Format currency for tooltip
   const formatCurrency = (value) => {
     return new Intl.NumberFormat("en-IN", {
       style: "currency",
@@ -66,7 +65,6 @@ const SalesTrend = () => {
     }).format(value);
   };
 
-  // Get chart data based on period
   const getChartData = () => {
     if (period === "daily" && dailySales) {
       return dailySales.map((item) => ({
@@ -90,10 +88,10 @@ const SalesTrend = () => {
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2 flex-wrap">
           <CardTitle className="text-xl font-semibold">Sales Trend</CardTitle>
           <Select value={period} onValueChange={setPeriod}>
-            <SelectTrigger className="w-32">
+            <SelectTrigger className="w-28 sm:w-32">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -106,28 +104,29 @@ const SalesTrend = () => {
       </CardHeader>
       <CardContent>
         {loading ? (
-          <div className="flex items-center justify-center h-64">
+          <div className="flex items-center justify-center h-48 sm:h-64">
             <div className="text-center">
               <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
               <p className="mt-2 text-gray-500">Loading sales data...</p>
             </div>
           </div>
         ) : chartData.length > 0 ? (
-          <ResponsiveContainer width="100%" height={250}>
+          <ResponsiveContainer width="100%" height={220}>
             <LineChart data={chartData}>
               <XAxis
                 dataKey="date"
                 stroke="#888888"
-                fontSize={12}
+                fontSize={11}
                 tickLine={false}
                 axisLine={false}
               />
               <YAxis
                 stroke="#888888"
-                fontSize={12}
+                fontSize={11}
                 tickLine={false}
                 axisLine={false}
                 tickFormatter={(value) => `₹${value}`}
+                width={50}
               />
               <Tooltip
                 formatter={(value) => [formatCurrency(value), "Sales"]}
@@ -144,7 +143,7 @@ const SalesTrend = () => {
             </LineChart>
           </ResponsiveContainer>
         ) : (
-          <div className="flex items-center justify-center h-64">
+          <div className="flex items-center justify-center h-48 sm:h-64">
             <div className="text-center">
               <TrendingUp className="w-16 h-16 text-emerald-500 mx-auto" />
               <p className="mt-2 text-gray-500">No sales data available</p>
