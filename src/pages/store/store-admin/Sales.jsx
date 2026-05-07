@@ -96,119 +96,120 @@ export default function Sales() {
   console.log("sales daily", dailySales)
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold tracking-tight">Sales Management</h1>
-        <Button className="bg-emerald-600 hover:bg-emerald-700">
+    <div className="space-y-4 sm:space-y-6 p-2 sm:p-0">
+      {/* Header */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Sales Management</h1>
+        <Button className="bg-emerald-600 hover:bg-emerald-700 w-full sm:w-auto">
           <Plus className="mr-2 h-4 w-4" /> New Sale
         </Button>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         <Card>
-          <CardContent className="p-6">
+          <CardContent className="p-4 sm:p-6">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-500">Total Sales</p>
-                <h3 className="text-2xl font-bold mt-1">
+              <div className="min-w-0 flex-1">
+                <p className="text-xs sm:text-sm font-medium text-gray-500 truncate">Total Sales</p>
+                <h3 className="text-lg sm:text-2xl font-bold mt-1">
                   {loading ? (
-                    <div className="h-8 w-20 bg-gray-200 rounded animate-pulse"></div>
+                    <div className="h-6 sm:h-8 w-16 sm:w-20 bg-gray-200 rounded animate-pulse"></div>
                   ) : (
                     formatCurrency(storeOverview?.totalSales || 0)
                   )}
                 </h3>
                 <p className="text-xs text-emerald-500 mt-1">
                   {loading ? (
-                    <div className="h-4 w-16 bg-gray-200 rounded animate-pulse"></div>
+                    <div className="h-3 sm:h-4 w-12 sm:w-16 bg-gray-200 rounded animate-pulse"></div>
                   ) : (
                     formatChange(storeOverview?.totalSales, storeOverview?.previousPeriodSales)
                   )} from last week
                 </p>
               </div>
-              <div className="p-3 bg-emerald-100 rounded-full">
-                <DollarSign className="w-8 h-8 text-emerald-600" />
+              <div className="p-2 sm:p-3 bg-emerald-100 rounded-full ml-2 flex-shrink-0">
+                <DollarSign className="w-5 h-5 sm:w-8 sm:h-8 text-emerald-600" />
               </div>
             </div>
           </CardContent>
         </Card>
 
         <Card>
-          <CardContent className="p-6">
+          <CardContent className="p-4 sm:p-6">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-500">Orders Today</p>
-                <h3 className="text-2xl font-bold mt-1">
+              <div className="min-w-0 flex-1">
+                <p className="text-xs sm:text-sm font-medium text-gray-500 truncate">Orders Today</p>
+                <h3 className="text-lg sm:text-2xl font-bold mt-1">
                   {loading ? (
-                    <div className="h-8 w-16 bg-gray-200 rounded animate-pulse"></div>
+                    <div className="h-6 sm:h-8 w-12 sm:w-16 bg-gray-200 rounded animate-pulse"></div>
                   ) : (
                     storeOverview?.todayOrders || 0
                   )}
                 </h3>
                 <p className="text-xs text-emerald-500 mt-1">
                   {loading ? (
-                    <div className="h-4 w-16 bg-gray-200 rounded animate-pulse"></div>
+                    <div className="h-3 sm:h-4 w-12 sm:w-16 bg-gray-200 rounded animate-pulse"></div>
                   ) : (
                     formatChange(storeOverview?.todayOrders, storeOverview?.yesterdayOrders)
                   )} from yesterday
                 </p>
               </div>
-              <div className="p-3 bg-blue-100 rounded-full">
-                <Store className="w-8 h-8 text-blue-600" />
+              <div className="p-2 sm:p-3 bg-blue-100 rounded-full ml-2 flex-shrink-0">
+                <Store className="w-5 h-5 sm:w-8 sm:h-8 text-blue-600" />
               </div>
             </div>
           </CardContent>
         </Card>
 
         <Card>
-          <CardContent className="p-6">
+          <CardContent className="p-4 sm:p-6">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-500">Active Cashiers</p>
-                <h3 className="text-2xl font-bold mt-1">
+              <div className="min-w-0 flex-1">
+                <p className="text-xs sm:text-sm font-medium text-gray-500 truncate">Active Cashiers</p>
+                <h3 className="text-lg sm:text-2xl font-bold mt-1">
                   {loading ? (
-                    <div className="h-8 w-16 bg-gray-200 rounded animate-pulse"></div>
+                    <div className="h-6 sm:h-8 w-12 sm:w-16 bg-gray-200 rounded animate-pulse"></div>
                   ) : (
                     storeOverview?.activeCashiers || 0
                   )}
                 </h3>
                 <p className="text-xs text-gray-500 mt-1">
                   {loading ? (
-                    <div className="h-4 w-16 bg-gray-200 rounded animate-pulse"></div>
+                    <div className="h-3 sm:h-4 w-12 sm:w-16 bg-gray-200 rounded animate-pulse"></div>
                   ) : (
                     "Same as yesterday"
                   )}
                 </p>
               </div>
-              <div className="p-3 bg-purple-100 rounded-full">
-                <User className="w-8 h-8 text-purple-600" />
+              <div className="p-2 sm:p-3 bg-purple-100 rounded-full ml-2 flex-shrink-0">
+                <User className="w-5 h-5 sm:w-8 sm:h-8 text-purple-600" />
               </div>
             </div>
           </CardContent>
         </Card>
 
         <Card>
-          <CardContent className="p-6">
+          <CardContent className="p-4 sm:p-6">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-500">Avg. Order Value</p>
-                <h3 className="text-2xl font-bold mt-1">
+              <div className="min-w-0 flex-1">
+                <p className="text-xs sm:text-sm font-medium text-gray-500 truncate">Avg. Order Value</p>
+                <h3 className="text-lg sm:text-2xl font-bold mt-1">
                   {loading ? (
-                    <div className="h-8 w-20 bg-gray-200 rounded animate-pulse"></div>
+                    <div className="h-6 sm:h-8 w-16 sm:w-20 bg-gray-200 rounded animate-pulse"></div>
                   ) : (
                     formatCurrency(storeOverview?.averageOrderValue || 0)
                   )}
                 </h3>
                 <p className="text-xs text-emerald-500 mt-1">
                   {loading ? (
-                    <div className="h-4 w-16 bg-gray-200 rounded animate-pulse"></div>
+                    <div className="h-3 sm:h-4 w-12 sm:w-16 bg-gray-200 rounded animate-pulse"></div>
                   ) : (
                     formatChange(storeOverview?.averageOrderValue, storeOverview?.previousPeriodAverageOrderValue)
                   )} from last week
                 </p>
               </div>
-              <div className="p-3 bg-orange-100 rounded-full">
-                <CreditCard className="w-8 h-8 text-orange-600" />
+              <div className="p-2 sm:p-3 bg-orange-100 rounded-full ml-2 flex-shrink-0">
+                <CreditCard className="w-5 h-5 sm:w-8 sm:h-8 text-orange-600" />
               </div>
             </div>
           </CardContent>
@@ -216,14 +217,14 @@ export default function Sales() {
       </div>
 
       {/* Charts */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Daily Sales (Last 7 Days)</CardTitle>
+          <CardHeader className="pb-2 sm:pb-4">
+            <CardTitle className="text-base sm:text-lg">Daily Sales (Last 7 Days)</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-2 sm:px-6">
             {loading ? (
-              <div className="h-80 flex items-center justify-center">
+              <div className="h-60 sm:h-80 flex items-center justify-center">
                 <div className="text-center">
                   <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
                   <p className="mt-2 text-gray-500">Loading chart data...</p>
@@ -231,21 +232,22 @@ export default function Sales() {
               </div>
             ) : dailySalesData.length > 0 ? (
               <ChartContainer config={salesConfig}>
-                <ResponsiveContainer width="100%" height={320}>
+                <ResponsiveContainer width="100%" height={240} className="sm:!h-[320px]">
                   <LineChart data={dailySalesData}>
                     <XAxis
                       dataKey="date"
                       stroke="#888888"
-                      fontSize={12}
+                      fontSize={10}
                       tickLine={false}
                       axisLine={false}
                     />
                     <YAxis
                       stroke="#888888"
-                      fontSize={12}
+                      fontSize={10}
                       tickLine={false}
                       axisLine={false}
                       tickFormatter={(value) => `₹${value}`}
+                      width={45}
                     />
                     <ChartTooltip
                       content={({ active, payload }) => (
@@ -268,7 +270,7 @@ export default function Sales() {
                 </ResponsiveContainer>
               </ChartContainer>
             ) : (
-              <div className="h-80 flex items-center justify-center">
+              <div className="h-60 sm:h-80 flex items-center justify-center">
                 <p className="text-gray-500">No sales data available</p>
               </div>
             )}
@@ -276,12 +278,12 @@ export default function Sales() {
         </Card>
 
         <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Payment Methods</CardTitle>
+          <CardHeader className="pb-2 sm:pb-4">
+            <CardTitle className="text-base sm:text-lg">Payment Methods</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-2 sm:px-6">
             {loading ? (
-              <div className="h-80 flex items-center justify-center">
+              <div className="h-60 sm:h-80 flex items-center justify-center">
                 <div className="text-center">
                   <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
                   <p className="mt-2 text-gray-500">Loading chart data...</p>
@@ -289,21 +291,22 @@ export default function Sales() {
               </div>
             ) : paymentMethodData.length > 0 ? (
               <ChartContainer config={paymentConfig}>
-                <ResponsiveContainer width="100%" height={320}>
+                <ResponsiveContainer width="100%" height={240} className="sm:!h-[320px]">
                   <BarChart data={paymentMethodData}>
                     <XAxis
                       dataKey="name"
                       stroke="#888888"
-                      fontSize={12}
+                      fontSize={10}
                       tickLine={false}
                       axisLine={false}
                     />
                     <YAxis
                       stroke="#888888"
-                      fontSize={12}
+                      fontSize={10}
                       tickLine={false}
                       axisLine={false}
                       tickFormatter={(value) => `₹${value}`}
+                      width={45}
                     />
                     <ChartTooltip
                       content={({ active, payload }) => (
@@ -324,15 +327,13 @@ export default function Sales() {
                 </ResponsiveContainer>
               </ChartContainer>
             ) : (
-              <div className="h-80 flex items-center justify-center">
+              <div className="h-60 sm:h-80 flex items-center justify-center">
                 <p className="text-gray-500">No payment data available</p>
               </div>
             )}
           </CardContent>
         </Card>
       </div>
-
-    
     </div>
   );
 }

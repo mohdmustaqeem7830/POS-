@@ -132,22 +132,21 @@ export default function Reports() {
   }, {});
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold tracking-tight">Reports & Analytics</h1>
-        
+    <div className="space-y-4 sm:space-y-6 p-2 sm:p-0">
+      {/* Header */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Reports & Analytics</h1>
       </div>
 
-
       {/* Charts */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Monthly Sales Trend</CardTitle>
+          <CardHeader className="pb-2 sm:pb-4">
+            <CardTitle className="text-base sm:text-lg">Monthly Sales Trend</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-2 sm:px-6">
             {loading ? (
-              <div className="h-80 flex items-center justify-center">
+              <div className="h-60 sm:h-80 flex items-center justify-center">
                 <div className="text-center">
                   <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
                   <p className="mt-2 text-gray-500">Loading chart data...</p>
@@ -155,20 +154,21 @@ export default function Reports() {
               </div>
             ) : salesData.length > 0 ? (
               <ChartContainer config={salesConfig}>
-                <ResponsiveContainer width="100%" height={320}>
+                <ResponsiveContainer width="100%" height={240} className="sm:!h-[320px]">
                   <BarChart data={salesData}>
                     <XAxis
                       dataKey="name"
                       stroke="#888888"
-                      fontSize={12}
+                      fontSize={10}
                       tickLine={false}
                       axisLine={false}
                     />
                     <YAxis
                       stroke="#888888"
-                      fontSize={12}
+                      fontSize={10}
                       tickLine={false}
                       axisLine={false}
+                      width={45}
                     />
                     <ChartTooltip
                       content={({ active, payload }) => (
@@ -189,7 +189,7 @@ export default function Reports() {
                 </ResponsiveContainer>
               </ChartContainer>
             ) : (
-              <div className="h-80 flex items-center justify-center">
+              <div className="h-60 sm:h-80 flex items-center justify-center">
                 <p className="text-gray-500">No sales data available</p>
               </div>
             )}
@@ -197,12 +197,12 @@ export default function Reports() {
         </Card>
 
         <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Sales by Category</CardTitle>
+          <CardHeader className="pb-2 sm:pb-4">
+            <CardTitle className="text-base sm:text-lg">Sales by Category</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-2 sm:px-6">
             {loading ? (
-              <div className="h-80 flex items-center justify-center">
+              <div className="h-60 sm:h-80 flex items-center justify-center">
                 <div className="text-center">
                   <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
                   <p className="mt-2 text-gray-500">Loading chart data...</p>
@@ -210,7 +210,7 @@ export default function Reports() {
               </div>
             ) : categoryData.length > 0 ? (
               <ChartContainer config={categoryConfig}>
-                <ResponsiveContainer width="100%" height={320}>
+                <ResponsiveContainer width="100%" height={240} className="sm:!h-[320px]">
                   <PieChart>
                     <Pie
                       data={categoryData}
@@ -244,15 +244,13 @@ export default function Reports() {
                 </ResponsiveContainer>
               </ChartContainer>
             ) : (
-              <div className="h-80 flex items-center justify-center">
+              <div className="h-60 sm:h-80 flex items-center justify-center">
                 <p className="text-gray-500">No category data available</p>
               </div>
             )}
           </CardContent>
         </Card>
       </div>
-
-     
     </div>
   );
 }
