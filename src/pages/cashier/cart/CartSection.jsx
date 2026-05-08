@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Pause, Trash2 } from "lucide-react";
 import CartItem from "./CartItem";
@@ -14,10 +13,8 @@ import {
 import { useDispatch } from "react-redux";
 import { useToast } from "../../../components/ui/use-toast";
 
-const CartSection = ({setShowHeldOrdersDialog}) => {
-  // Global cart state
+const CartSection = ({ setShowHeldOrdersDialog }) => {
   const cartItems = useSelector(selectCartItems);
-
   console.log("Cart items:", cartItems);
   const heldOrders = useSelector(selectHeldOrders);
   const dispatch = useDispatch();
@@ -40,10 +37,10 @@ const CartSection = ({setShowHeldOrdersDialog}) => {
   };
 
   return (
-    <div className="w-2/5 flex flex-col bg-card border-r">
-      <div className="p-4 border-b bg-muted">
+    <div className="w-full lg:w-2/5 flex flex-col bg-card border-r h-full">
+      <div className="p-3 sm:p-4 border-b bg-muted sticky top-0 z-10">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold flex items-center">
+          <h2 className="text-base sm:text-lg font-semibold flex items-center">
             <ShoppingCart className="w-5 h-5 mr-2" />
             Cart ({cartItems.length} items)
           </h2>
@@ -73,7 +70,7 @@ const CartSection = ({setShowHeldOrdersDialog}) => {
             <p className="text-sm">Add products to start an order</p>
           </div>
         ) : (
-          <div className="p-4 space-y-3">
+          <div className="p-3 sm:p-4 space-y-3">
             {cartItems.map((item) => (
               <CartItem
                 item={item}

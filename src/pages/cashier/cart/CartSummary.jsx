@@ -15,7 +15,7 @@ const CartSummary = () => {
   const total = useSelector(selectTotal);
 
   return (
-    <div className="border-t bg-muted p-4">
+    <div className="border-t bg-muted p-3 sm:p-4 shrink-0">
       <div className="space-y-2 text-sm">
         <div className="flex justify-between">
           <span>Subtotal:</span>

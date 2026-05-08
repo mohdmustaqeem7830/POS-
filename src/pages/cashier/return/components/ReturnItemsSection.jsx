@@ -1,29 +1,21 @@
-import React from "react";
+// ReturnItemsSection.jsx
+import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+  Table, TableBody, TableCell,
+  TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
+  Select, SelectTrigger, SelectValue,
+  SelectContent, SelectItem,
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { createRefund } from "../../../../Redux Toolkit/features/refund/refundThunks";
-import { useDispatch } from "react-redux";
-import { useState } from "react";
 
 const returnReasons = [
   "Damaged product",
@@ -45,18 +37,13 @@ const ReturnItemsSection = ({ selectedOrder, setShowReceiptDialog }) => {
   const [refundMethod, setRefundMethod] = useState("");
 
   const processRefund = async () => {
-    // setShowRefundDialog(false);
     setShowReceiptDialog(true);
-
-    // Prepare refundDTO for API
     const refundDTO = {
       orderId: selectedOrder.id,
       branchId: branch?.id,
       cashierId: userProfile?.id,
-
       reason: returnReason === "Other" ? otherReason : returnReason,
-      refundMethod:
-        refundMethod === "original" ? selectedOrder.paymentType : refundMethod,
+      refundMethod: refundMethod === "original" ? selectedOrder.paymentType : refundMethod,
     };
     try {
       await dispatch(createRefund(refundDTO)).unwrap();
@@ -74,19 +61,16 @@ const ReturnItemsSection = ({ selectedOrder, setShowReceiptDialog }) => {
   };
 
   return (
-    <div className="w-1/2 p-4 flex flex-col">
-      <Card className="mt-4">
-        <CardContent className="p-4">
+    <div className="w-full sm:w-1/2 p-3 sm:p-4 flex flex-col">
+      <Card className="mt-0 sm:mt-4">
+        <CardContent className="p-3 sm:p-4">
           <div className="space-y-4">
             <div>
-              <Label htmlFor="return-reason" className="mb-2 block">
+              <Label htmlFor="return-reason" className="mb-2 block text-sm">
                 Return Reason
               </Label>
-              <Select
-                value={returnReason}
-                onValueChange={(value) => setReturnReason(value)}
-              >
-                <SelectTrigger className="w-full">
+              <Select value={returnReason} onValueChange={setReturnReason}>
+                <SelectTrigger className="w-full min-h-[44px]">
                   <SelectValue placeholder="Select a reason..." />
                 </SelectTrigger>
                 <SelectContent>
@@ -98,9 +82,10 @@ const ReturnItemsSection = ({ selectedOrder, setShowReceiptDialog }) => {
                 </SelectContent>
               </Select>
             </div>
+
             {returnReason === "Other" && (
               <div>
-                <Label htmlFor="other-reason" className="mb-2 block">
+                <Label htmlFor="other-reason" className="mb-2 block text-sm">
                   Specify Reason
                 </Label>
                 <Textarea
@@ -108,15 +93,17 @@ const ReturnItemsSection = ({ selectedOrder, setShowReceiptDialog }) => {
                   placeholder="Please specify the return reason"
                   value={otherReason}
                   onChange={(e) => setOtherReason(e.target.value)}
+                  className="min-h-[80px] text-base"
                 />
               </div>
             )}
+
             <div>
-              <Label htmlFor="refund-method" className="mb-2 block">
+              <Label htmlFor="refund-method" className="mb-2 block text-sm">
                 Refund Method
               </Label>
               <Select value={refundMethod} onValueChange={setRefundMethod}>
-                <SelectTrigger className="w-full">
+                <SelectTrigger className="w-full min-h-[44px]">
                   <SelectValue placeholder="Select refund method..." />
                 </SelectTrigger>
                 <SelectContent>
@@ -130,13 +117,15 @@ const ReturnItemsSection = ({ selectedOrder, setShowReceiptDialog }) => {
                 </SelectContent>
               </Select>
             </div>
-            <div className="pt-4 border-t">
-              <div className="flex justify-between text-lg font-semibold">
+
+            <div className="pt-3 sm:pt-4 border-t">
+              <div className="flex justify-between text-base sm:text-lg font-semibold">
                 <span>Total Refund Amount:</span>
                 <span>₹{selectedOrder.totalAmount}</span>
               </div>
             </div>
-            <Button className="w-full" onClick={processRefund}>
+
+            <Button className="w-full min-h-[48px] text-base" onClick={processRefund}>
               Process Refund
             </Button>
           </div>

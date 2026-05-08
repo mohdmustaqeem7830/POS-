@@ -1,3 +1,4 @@
+// PaymentSummaryCard.jsx
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { getPaymentIcon } from '../../../../utils/getPaymentIcon';
@@ -6,20 +7,20 @@ import { getPaymentMethodLabel } from '../../../../utils/paymentMethodLable';
 const PaymentSummaryCard = ({ shiftData }) => {
   return (
     <Card>
-      <CardContent className="p-6">
-        <h2 className="text-xl font-semibold mb-4">Payment Summary</h2>
-        <div className="space-y-4">
+      <CardContent className="p-4 sm:p-6">
+        <h2 className="text-base sm:text-xl font-semibold mb-3 sm:mb-4">Payment Summary</h2>
+        <div className="space-y-3 sm:space-y-4">
           {shiftData.paymentSummaries?.map((payment) => (
-            <div key={payment.type} className="flex items-center">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+            <div key={payment.type} className="flex items-center gap-2 sm:gap-0">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-primary/10 flex items-center justify-center sm:mr-4 flex-shrink-0">
                 {getPaymentIcon(payment.type)}
               </div>
-              <div className="flex-1">
-                <div className="flex justify-between">
-                  <span className="font-medium">{(payment.type)}</span>
-                  <span className="font-bold">₹{payment.totalAmount?.toFixed(2)}</span>
+              <div className="flex-1 min-w-0">
+                <div className="flex justify-between gap-1">
+                  <span className="font-medium text-xs sm:text-sm truncate">{payment.type}</span>
+                  <span className="font-bold text-xs sm:text-sm flex-shrink-0">₹{payment.totalAmount?.toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between text-sm text-muted-foreground">
+                <div className="flex justify-between text-xs text-muted-foreground gap-1">
                   <span>{payment.transactionCount} transactions</span>
                   <span>{((payment.totalAmount / shiftData.totalSales) * 100)?.toFixed(1)}%</span>
                 </div>
@@ -32,4 +33,4 @@ const PaymentSummaryCard = ({ shiftData }) => {
   );
 };
 
-export default PaymentSummaryCard; 
+export default PaymentSummaryCard;

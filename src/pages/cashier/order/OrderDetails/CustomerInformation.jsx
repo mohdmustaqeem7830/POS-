@@ -1,30 +1,29 @@
+// OrderDetails/CustomerInformation.jsx
 import React from 'react'
 import { Card, CardContent } from '../../../../components/ui/card'
 
-const CustomerInformation = ({selectedOrder}) => {
+const CustomerInformation = ({ selectedOrder }) => {
   return (
-       <Card>
-          <CardContent className="p-4">
-            <h3 className="font-semibold mb-2">Customer Information</h3>
-            <div className="space-y-1 text-sm">
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Name:</span>
-                <span>
-                  {selectedOrder.customer?.fullName || "Walk-in Customer"}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Phone:</span>
-                <span>{selectedOrder.customer?.phone || "N/A"}</span>
-              </div>
-                 <div className="flex justify-between">
-                <span className="text-muted-foreground">Email:</span>
-                <span>{selectedOrder.customer?.email || "N/A"}</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+    <Card>
+      <CardContent className="p-3 sm:p-4">
+        <h3 className="font-semibold mb-2 text-sm sm:text-base">Customer Information</h3>
+        <div className="space-y-1 text-xs sm:text-sm">
+          <div className="flex justify-between gap-2">
+            <span className="text-muted-foreground flex-shrink-0">Name:</span>
+            <span className="text-right truncate">{selectedOrder.customer?.fullName || "Walk-in Customer"}</span>
+          </div>
+          <div className="flex justify-between gap-2">
+            <span className="text-muted-foreground flex-shrink-0">Phone:</span>
+            <span className="text-right">{selectedOrder.customer?.phone || "N/A"}</span>
+          </div>
+          <div className="flex justify-between gap-2">
+            <span className="text-muted-foreground flex-shrink-0">Email:</span>
+            <span className="text-right truncate">{selectedOrder.customer?.email || "N/A"}</span>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   )
 }
 
-export default CustomerInformation
+export default CustomerInformation;

@@ -1,4 +1,4 @@
-
+// CustomerForm.jsx
 import {
   Dialog,
   DialogContent,
@@ -22,7 +22,6 @@ const CustomerForm = ({
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.customer);
 
-  // Validation schema using Yup
   const validationSchema = Yup.object({
     fullName: Yup.string()
       .required("Full name is required")
@@ -44,12 +43,8 @@ const CustomerForm = ({
     try {
       await dispatch(createCustomer(values)).unwrap();
       toast.success("Customer created successfully!");
-
-      // Reset form and close dialog
       resetForm();
       setShowCustomerForm(false);
-
- 
     } catch (error) {
       toast.error(error || "Failed to create customer");
     } finally {
@@ -63,9 +58,9 @@ const CustomerForm = ({
 
   return (
     <Dialog open={showCustomerForm} onOpenChange={setShowCustomerForm}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="w-[95vw] max-w-md rounded-xl sm:rounded-lg mx-auto">
         <DialogHeader>
-          <DialogTitle>Add New Customer</DialogTitle>
+          <DialogTitle className="text-lg sm:text-xl">Add New Customer</DialogTitle>
         </DialogHeader>
 
         <Formik
@@ -82,9 +77,7 @@ const CustomerForm = ({
                   id="fullName"
                   name="fullName"
                   placeholder="Enter customer full name"
-                  className={
-                    errors.fullName && touched.fullName ? "border-red-500" : ""
-                  }
+                  className={`min-h-[44px] text-base ${errors.fullName && touched.fullName ? "border-red-500" : ""}`}
                 />
                 <ErrorMessage
                   name="fullName"
@@ -100,9 +93,7 @@ const CustomerForm = ({
                   id="phone"
                   name="phone"
                   placeholder="Enter phone number"
-                  className={
-                    errors.phone && touched.phone ? "border-red-500" : ""
-                  }
+                  className={`min-h-[44px] text-base ${errors.phone && touched.phone ? "border-red-500" : ""}`}
                 />
                 <ErrorMessage
                   name="phone"
@@ -119,9 +110,7 @@ const CustomerForm = ({
                   name="email"
                   type="email"
                   placeholder="Enter email address"
-                  className={
-                    errors.email && touched.email ? "border-red-500" : ""
-                  }
+                  className={`min-h-[44px] text-base ${errors.email && touched.email ? "border-red-500" : ""}`}
                 />
                 <ErrorMessage
                   name="email"
@@ -130,11 +119,11 @@ const CustomerForm = ({
                 />
               </div>
 
-              <DialogFooter>
-                <Button variant="outline" onClick={handleCancel} type="button">
+              <DialogFooter className="flex-col sm:flex-row gap-2 sm:gap-0">
+                <Button variant="outline" onClick={handleCancel} type="button" className="w-full sm:w-auto min-h-[44px]">
                   Cancel
                 </Button>
-                <Button type="submit" disabled={isSubmitting || loading}>
+                <Button type="submit" disabled={isSubmitting || loading} className="w-full sm:w-auto min-h-[44px]">
                   {isSubmitting || loading ? "Creating..." : "Create Customer"}
                 </Button>
               </DialogFooter>

@@ -28,19 +28,15 @@ const PaymentDialog = ({
   setShowReceiptDialog,
 }) => {
   const paymentMethod = useSelector(selectPaymentMethod);
-  const {toast} = useToast();
+  const { toast } = useToast();
   const cart = useSelector(selectCartItems);
   const branch = useSelector((state) => state.branch);
   const { userProfile } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const selectedCustomer = useSelector(selectSelectedCustomer);
-
   const total = useSelector(selectTotal);
-
   const note = useSelector(selectNote);
-
-  
 
   const processPayment = async () => {
     if (cart.length === 0) {
@@ -62,7 +58,6 @@ const PaymentDialog = ({
     }
 
     try {
-      // Prepare order data according to OrderDTO structure
       const orderData = {
         totalAmount: total,
         branchId: branch.id,
@@ -80,7 +75,6 @@ const PaymentDialog = ({
 
       console.log("Creating order:", orderData);
 
-      // Create order
       const createdOrder = await dispatch(createOrder(orderData)).unwrap();
       dispatch(setCurrentOrder(createdOrder));
 
@@ -105,7 +99,7 @@ const PaymentDialog = ({
 
   return (
     <Dialog open={showPaymentDialog} onOpenChange={setShowPaymentDialog}>
-      <DialogContent>
+      <DialogContent className="w-[95vw] max-w-md">
         <DialogHeader>
           <DialogTitle>Payment</DialogTitle>
         </DialogHeader>
@@ -123,7 +117,7 @@ const PaymentDialog = ({
               <Button
                 key={method.key}
                 variant={paymentMethod === method.key ? "default" : "outline"}
-                className="w-full justify-start"
+                className="w-full justify-start min-h-[48px] text-base"
                 onClick={() => handlePaymentMethod(method.key)}
               >
                 {method.label}
@@ -132,11 +126,20 @@ const PaymentDialog = ({
           </div>
         </div>
 
-        <DialogFooter>
-          <Button variant="outline" onClick={() => setShowPaymentDialog(false)}>
+        <DialogFooter className="flex-col sm:flex-row gap-2">
+          <Button
+            variant="outline"
+            onClick={() => setShowPaymentDialog(false)}
+            className="w-full sm:w-auto min-h-[44px]"
+          >
             Cancel
           </Button>
-          <Button onClick={processPayment}>Complete Payment</Button>
+          <Button
+            onClick={processPayment}
+            className="w-full sm:w-auto min-h-[44px]"
+          >
+            Complete Payment
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -1,3 +1,4 @@
+// CustomerList.jsx
 import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { StarIcon, UserIcon, Loader2 } from "lucide-react";

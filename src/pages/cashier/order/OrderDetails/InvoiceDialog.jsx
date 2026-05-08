@@ -1,40 +1,33 @@
+// OrderDetails/InvoiceDialog.jsx
 import React from "react";
 import { handleDownloadOrderPDF } from "../pdf/pdfUtils";
 import { useToast } from "../../../../components/ui/use-toast";
 import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
+  Dialog, DialogContent, DialogFooter,
+  DialogHeader, DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
-import { PrinterIcon } from "lucide-react";
-import { useSelector } from "react-redux";
+import { Download, PrinterIcon } from "lucide-react";
+import { useSelector, useDispatch } from "react-redux";
 import OrderDetails from "./OrderDetails";
-import { useDispatch } from "react-redux";
 import { resetOrder } from "../../../../Redux Toolkit/features/cart/cartSlice";
 
 const InvoiceDialog = ({ showInvoiceDialog, setShowInvoiceDialog }) => {
   let { selectedOrder } = useSelector((state) => state.order);
-//   selectedOrder={customer:{fullName:""},items:[{}]}
-//   showInvoiceDialog=true
-  
   const { toast } = useToast();
   const dispatch = useDispatch();
+
   const handlePrintInvoice = () => {
     console.log("print invoice...");
   };
+
   const handleDownloadPDF = async () => {
     await handleDownloadOrderPDF(selectedOrder, toast);
   };
 
   const finishOrder = () => {
     setShowInvoiceDialog(false);
-    // Reset the order
     dispatch(resetOrder());
-
     toast({
       title: "Order Completed",
       description: "Receipt printed and order saved successfully",
@@ -44,26 +37,23 @@ const InvoiceDialog = ({ showInvoiceDialog, setShowInvoiceDialog }) => {
   return (
     <Dialog open={showInvoiceDialog} onOpenChange={setShowInvoiceDialog}>
       {selectedOrder && (
-        <DialogContent className="w-5xl">
+        <DialogContent className="w-[95vw] max-w-5xl rounded-xl sm:rounded-lg mx-auto max-h-[90dvh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Order Details - Invoice</DialogTitle>
+            <DialogTitle className="text-base sm:text-lg">Order Details - Invoice</DialogTitle>
           </DialogHeader>
           <OrderDetails selectedOrder={selectedOrder} />
-
-          <DialogFooter className="gap-2 sm:gap-0 space-x-3">
-            <Button variant="outline" onClick={handleDownloadPDF}>
+          <DialogFooter className="flex-col sm:flex-row gap-2 sm:gap-0 sm:space-x-3">
+            <Button variant="outline" onClick={handleDownloadPDF} className="w-full sm:w-auto min-h-[44px]">
               <Download className="h-4 w-4 mr-2" />
               Download PDF
             </Button>
-            <Button
-              variant="outline"
-              onClick={() => handlePrintInvoice(selectedOrder)}
-            >
+            <Button variant="outline" onClick={() => handlePrintInvoice(selectedOrder)} className="w-full sm:w-auto min-h-[44px]">
               <PrinterIcon className="h-4 w-4 mr-2" />
               Print Invoice
             </Button>
-
-            <Button onClick={finishOrder}>Start New Order</Button>
+            <Button onClick={finishOrder} className="w-full sm:w-auto min-h-[44px]">
+              Start New Order
+            </Button>
           </DialogFooter>
         </DialogContent>
       )}

@@ -15,10 +15,8 @@ import { Pause } from "lucide-react";
 const PaymentSection = ({ setShowPaymentDialog }) => {
   const cartItems = useSelector(selectCartItems);
   const selectedCustomer = useSelector(selectSelectedCustomer);
-
   const total = useSelector(selectTotal);
-
-  const {toast} = useToast();
+  const { toast } = useToast();
   const dispatch = useDispatch();
 
   const handlePayment = () => {
@@ -30,8 +28,6 @@ const PaymentSection = ({ setShowPaymentDialog }) => {
       });
       return;
     }
-
-    // Check if customer is selected
     if (!selectedCustomer) {
       toast({
         title: "Customer Required",
@@ -40,7 +36,6 @@ const PaymentSection = ({ setShowPaymentDialog }) => {
       });
       return;
     }
-
     setShowPaymentDialog(true);
   };
 
@@ -53,14 +48,13 @@ const PaymentSection = ({ setShowPaymentDialog }) => {
       });
       return;
     }
-
     dispatch(holdOrder());
-
     toast({
       title: "Order On Hold",
       description: "Order placed on hold",
     });
   };
+
   return (
     <div className="flex-1 p-4 flex flex-col justify-end">
       <div className="space-y-4">
@@ -70,20 +64,18 @@ const PaymentSection = ({ setShowPaymentDialog }) => {
           </div>
           <p className="text-sm text-muted-foreground">Total Amount</p>
         </div>
-
         <div className="space-y-2">
           <Button
-            className="w-full py-3 text-lg font-semibold "
+            className="w-full py-3 text-lg font-semibold min-h-[52px]"
             onClick={handlePayment}
             disabled={cartItems.length === 0}
           >
             <CreditCard className="w-5 h-5 mr-2" />
             Process Payment
           </Button>
-
           <Button
             variant="outline"
-            className="w-full"
+            className="w-full min-h-[44px]"
             onClick={handleHoldOrder}
             disabled={cartItems.length === 0}
           >

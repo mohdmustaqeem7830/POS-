@@ -13,9 +13,9 @@ import {
   searchProducts,
 } from "../../../Redux Toolkit/features/product/productThunks";
 import { getBranchById } from "../../../Redux Toolkit/features/branch/branchThunks";
-import { clearSearchResults } from '@/Redux Toolkit/features/product/productSlice';
+import { clearSearchResults } from "@/Redux Toolkit/features/product/productSlice";
 
-const ProductSection = ({searchInputRef}) => {
+const ProductSection = ({ searchInputRef }) => {
   const dispatch = useDispatch();
   const { branch } = useSelector((state) => state.branch);
   const { userProfile } = useSelector((state) => state.user);
@@ -24,12 +24,10 @@ const ProductSection = ({searchInputRef}) => {
     products,
     searchResults,
     loading,
-    error: productsError
+    error: productsError,
   } = useSelector((state) => state.product);
 
   const { toast } = useToast();
-
-   
 
   const getDisplayProducts = () => {
     if (searchTerm.trim() && searchResults.length > 0) {
@@ -38,18 +36,14 @@ const ProductSection = ({searchInputRef}) => {
     return products || [];
   };
 
-  // Fetch products when component mounts or when branch changes
   useEffect(() => {
     const fetchProducts = async () => {
       console.log("Fetching products...", { branch, userProfile });
 
-      // Wait for branch to be loaded
       if (branch?.storeId && localStorage.getItem("jwt")) {
         console.log("Fetching products for branch:", branch.storeId);
         try {
-          await dispatch(
-            getProductsByStore(branch.storeId)
-          ).unwrap();
+          await dispatch(getProductsByStore(branch.storeId)).unwrap();
         } catch (error) {
           console.error("Failed to fetch products:", error);
           toast({
@@ -63,7 +57,6 @@ const ProductSection = ({searchInputRef}) => {
         localStorage.getItem("jwt") &&
         !branch
       ) {
-        // If branch is not loaded but we have branchId in userProfile, fetch branch first
         console.log("Fetching branch first:", userProfile.branchId);
         try {
           await dispatch(
@@ -86,7 +79,6 @@ const ProductSection = ({searchInputRef}) => {
     fetchProducts();
   }, [dispatch, branch, userProfile, toast]);
 
-  // Debounced search function
   const debouncedSearch = useCallback(
     (() => {
       let timeoutId;
@@ -110,45 +102,42 @@ const ProductSection = ({searchInputRef}) => {
                 });
               });
           }
-        }, 500); // 300ms debounce
+        }, 500);
       };
     })(),
     [dispatch, branch, toast]
   );
 
-  // Handle search term changes
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
     if (e.target.value.trim()) {
       debouncedSearch(e.target.value);
     } else {
-      // Clear search results when search term is empty
       dispatch(clearSearchResults());
     }
   };
 
-    // Show error toast if products fail to load
-    useEffect(() => {
-      if (productsError) {
-        toast({
-          title: 'Error',
-          description: productsError,
-          variant: 'destructive',
-        });
-      }
-    }, [productsError, toast]);
+  useEffect(() => {
+    if (productsError) {
+      toast({
+        title: "Error",
+        description: productsError,
+        variant: "destructive",
+      });
+    }
+  }, [productsError, toast]);
 
   return (
-    <div className="w-2/5 flex flex-col bg-card border-r">
+    <div className="w-full lg:w-2/5 flex flex-col bg-card border-r h-full">
       {/* Search Section */}
-      <div className="p-4 border-b bg-muted">
+      <div className="p-3 sm:p-4 border-b bg-muted sticky top-0 z-10">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
           <Input
             ref={searchInputRef}
             type="text"
             placeholder="Search products or scan barcode (F1)"
-            className="pl-10 pr-4 py-3 text-lg"
+            className="pl-10 pr-4 py-3 text-base lg:text-lg"
             value={searchTerm}
             onChange={handleSearchChange}
             disabled={loading}
@@ -189,7 +178,7 @@ const ProductSection = ({searchInputRef}) => {
       </div>
 
       {/* Products Grid */}
-      <div className="flex-1 overflow-y-auto p-4">
+      <div className="flex-1 overflow-y-auto p-3 sm:p-4">
         {loading ? (
           <div className="flex items-center justify-center h-64">
             <div className="flex flex-col items-center space-y-4">
@@ -209,13 +198,9 @@ const ProductSection = ({searchInputRef}) => {
             </div>
           </div>
         ) : (
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 gap-2 sm:gap-3">
             {getDisplayProducts().map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-               
-              />
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
         )}

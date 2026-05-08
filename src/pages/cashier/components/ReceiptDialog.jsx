@@ -1,3 +1,4 @@
+// ReceiptDialog.jsx
 import React from "react";
 import {
   Dialog,
@@ -25,9 +26,7 @@ const ReceiptDialog = ({ showReceiptDialog, setShowReceiptDialog }) => {
 
   const finishOrder = () => {
     setShowReceiptDialog(false);
-    // Reset the order
     dispatch(resetOrder());
-
     toast({
       title: "Order Completed",
       description: "Receipt printed and order saved successfully",
@@ -36,19 +35,19 @@ const ReceiptDialog = ({ showReceiptDialog, setShowReceiptDialog }) => {
 
   return (
     <Dialog open={showReceiptDialog} onOpenChange={setShowReceiptDialog}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="w-[95vw] max-w-md rounded-xl sm:rounded-lg mx-auto">
         <DialogHeader>
-          <DialogTitle>Receipt</DialogTitle>
+          <DialogTitle className="text-lg sm:text-xl">Receipt</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4">
           <div className="text-center">
-            <Receipt className="w-16 h-16 mx-auto text-green-600 mb-4" />
-            <h3 className="text-lg font-semibold">Payment Successful!</h3>
-            <p className="text-sm text-gray-600">Receipt has been printed</p>
+            <Receipt className="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-green-600 mb-3 sm:mb-4" />
+            <h3 className="text-base sm:text-lg font-semibold">Payment Successful!</h3>
+            <p className="text-xs sm:text-sm text-gray-600">Receipt has been printed</p>
           </div>
 
-          <div className="bg-gray-50 p-4 rounded-lg">
+          <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span>Order Total:</span>
@@ -65,7 +64,10 @@ const ReceiptDialog = ({ showReceiptDialog, setShowReceiptDialog }) => {
         </div>
 
         <DialogFooter>
-          <Button onClick={finishOrder} className="w-full">
+          <Button
+            onClick={finishOrder}
+            className="w-full min-h-[48px] text-base"
+          >
             Start New Order
           </Button>
         </DialogFooter>

@@ -1,8 +1,6 @@
 import { Outlet, useNavigate } from "react-router";
-
 import { useToast } from "@/components/ui/use-toast";
 import {
- 
   ShoppingCartIcon,
   ClockIcon,
   RotateCcwIcon,
@@ -41,11 +39,10 @@ const navItems = [
   },
 ];
 
-const LayoutContent  = () => {
+const LayoutContent = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const {sidebarOpen, setSidebarOpen}=useSidebar();
-
+  const { sidebarOpen, setSidebarOpen } = useSidebar();
 
   const handleLogout = () => {
     toast({
@@ -55,13 +52,9 @@ const LayoutContent  = () => {
     navigate("/cashier/shift-summary");
   };
 
-
-
   return (
-    <div className="flex h-screen bg-background">
-      {/* Hamburger for all screen sizes */}
-
-      {/* Sidebar overlay for all screen sizes */}
+    <div className="flex h-[100dvh] bg-background">
+      {/* Sidebar overlay */}
       {sidebarOpen && (
         <div
           className="fixed inset-0 z-20 bg-black/40"
@@ -81,11 +74,9 @@ const LayoutContent  = () => {
         />
       </div>
       {/* Main Content */}
-    
-        <div className="flex-1 overflow-auto">
-          <Outlet />
-        </div>
-      
+      <div className="flex-1 overflow-auto">
+        <Outlet />
+      </div>
     </div>
   );
 };
