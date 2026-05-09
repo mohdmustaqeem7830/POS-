@@ -1,3 +1,4 @@
+// OwnerDetailsForm.jsx
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -19,6 +20,12 @@ const validationSchema = Yup.object({
     .required('Confirm password is required'),
 });
 
+const ErrorIcon = () => (
+  <svg className="w-4 h-4 mr-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+  </svg>
+);
+
 const OwnerDetailsForm = ({ initialValues, onSubmit, onBack }) => {
   return (
     <Formik
@@ -30,10 +37,11 @@ const OwnerDetailsForm = ({ initialValues, onSubmit, onBack }) => {
       }}
     >
       {({ isSubmitting, isValid, touched, errors }) => (
-        <Form className="space-y-6">
-          {/* Full Name Field */}
+        <Form className="space-y-4 sm:space-y-6">
+
+          {/* Full Name */}
           <div>
-            <label htmlFor="fullName" className="block text-sm font-semibold text-gray-700 mb-2">
+            <label htmlFor="fullName" className="block text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
               Full Name
             </label>
             <Field
@@ -41,28 +49,21 @@ const OwnerDetailsForm = ({ initialValues, onSubmit, onBack }) => {
               type="text"
               id="fullName"
               name="fullName"
-              className={`w-full px-4 py-3 border rounded-lg shadow-sm transition-all duration-200 focus:outline-none ${
-                touched.fullName && errors.fullName 
-                  ? 'border-red-300 bg-red-50' 
+              className={`w-full px-4 py-3 border rounded-lg shadow-sm transition-all duration-200 focus:outline-none min-h-[48px] text-base ${
+                touched.fullName && errors.fullName
+                  ? 'border-red-300 bg-red-50'
                   : 'border-gray-300 hover:border-gray-400'
               }`}
               placeholder="Enter your full name"
             />
-            <ErrorMessage name="fullName" component="div" className="text-red-500 text-sm mt-2 flex items-center">
-              {msg => (
-                <>
-                  <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                  </svg>
-                  {msg}
-                </>
-              )}
+            <ErrorMessage name="fullName" component="div" className="text-red-500 text-sm mt-1.5 flex items-center">
+              {msg => <><ErrorIcon />{msg}</>}
             </ErrorMessage>
           </div>
 
-          {/* Email Field */}
+          {/* Email */}
           <div>
-            <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+            <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
               Email Address
             </label>
             <Field
@@ -70,28 +71,21 @@ const OwnerDetailsForm = ({ initialValues, onSubmit, onBack }) => {
               type="email"
               id="email"
               name="email"
-              className={`w-full px-4 py-3 border rounded-lg shadow-sm transition-all duration-200 focus:outline-none ${
-                touched.email && errors.email 
-                  ? 'border-red-300 bg-red-50' 
+              className={`w-full px-4 py-3 border rounded-lg shadow-sm transition-all duration-200 focus:outline-none min-h-[48px] text-base ${
+                touched.email && errors.email
+                  ? 'border-red-300 bg-red-50'
                   : 'border-gray-300 hover:border-gray-400'
               }`}
               placeholder="Enter your email address"
             />
-            <ErrorMessage name="email" component="div" className="text-red-500 text-sm mt-2 flex items-center">
-              {msg => (
-                <>
-                  <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                  </svg>
-                  {msg}
-                </>
-              )}
+            <ErrorMessage name="email" component="div" className="text-red-500 text-sm mt-1.5 flex items-center">
+              {msg => <><ErrorIcon />{msg}</>}
             </ErrorMessage>
           </div>
 
-          {/* Password Field */}
+          {/* Password */}
           <div>
-            <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">
+            <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
               Password
             </label>
             <Field
@@ -99,28 +93,21 @@ const OwnerDetailsForm = ({ initialValues, onSubmit, onBack }) => {
               type="password"
               id="password"
               name="password"
-              className={`w-full px-4 py-3 border rounded-lg shadow-sm transition-all duration-200 focus:outline-none ${
-                touched.password && errors.password 
-                  ? 'border-red-300 bg-red-50' 
+              className={`w-full px-4 py-3 border rounded-lg shadow-sm transition-all duration-200 focus:outline-none min-h-[48px] text-base ${
+                touched.password && errors.password
+                  ? 'border-red-300 bg-red-50'
                   : 'border-gray-300 hover:border-gray-400'
               }`}
               placeholder="Enter your password"
             />
-            <ErrorMessage name="password" component="div" className="text-red-500 text-sm mt-2 flex items-center">
-              {msg => (
-                <>
-                  <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                  </svg>
-                  {msg}
-                </>
-              )}
+            <ErrorMessage name="password" component="div" className="text-red-500 text-sm mt-1.5 flex items-center">
+              {msg => <><ErrorIcon />{msg}</>}
             </ErrorMessage>
           </div>
 
-          {/* Confirm Password Field */}
+          {/* Confirm Password */}
           <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-semibold text-gray-700 mb-2">
+            <label htmlFor="confirmPassword" className="block text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
               Confirm Password
             </label>
             <Field
@@ -128,31 +115,24 @@ const OwnerDetailsForm = ({ initialValues, onSubmit, onBack }) => {
               type="password"
               id="confirmPassword"
               name="confirmPassword"
-              className={`w-full px-4 py-3 border rounded-lg shadow-sm transition-all duration-200 focus:outline-none ${
-                touched.confirmPassword && errors.confirmPassword 
-                  ? 'border-red-300 bg-red-50' 
+              className={`w-full px-4 py-3 border rounded-lg shadow-sm transition-all duration-200 focus:outline-none min-h-[48px] text-base ${
+                touched.confirmPassword && errors.confirmPassword
+                  ? 'border-red-300 bg-red-50'
                   : 'border-gray-300 hover:border-gray-400'
               }`}
               placeholder="Confirm your password"
             />
-            <ErrorMessage name="confirmPassword" component="div" className="text-red-500 text-sm mt-2 flex items-center">
-              {msg => (
-                <>
-                  <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                  </svg>
-                  {msg}
-                </>
-              )}
+            <ErrorMessage name="confirmPassword" component="div" className="text-red-500 text-sm mt-1.5 flex items-center">
+              {msg => <><ErrorIcon />{msg}</>}
             </ErrorMessage>
           </div>
 
-          {/* Submit Button */}
-          <div className="pt-4">
+          {/* Submit */}
+          <div className="pt-2 sm:pt-4">
             <Button
               type="submit"
               disabled={isSubmitting || !isValid}
-              className="w-full py-3 text-base font-semibold text-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              className="w-full py-3 min-h-[48px] text-base font-semibold text-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
               {isSubmitting ? (
                 <div className="flex items-center justify-center">
@@ -172,10 +152,11 @@ const OwnerDetailsForm = ({ initialValues, onSubmit, onBack }) => {
               )}
             </Button>
           </div>
+
         </Form>
       )}
     </Formik>
   );
 };
 
-export default OwnerDetailsForm; 
+export default OwnerDetailsForm;
